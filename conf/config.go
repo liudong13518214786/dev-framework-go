@@ -8,4 +8,7 @@ const (
 	REDIS_MAXACTIVE        = 10
 	REDIS_IDLETIMEOUT      = 10
 	REDIS_WAIT        bool = true
+	SESSION_NAME           = "SXS-TEST"
+	COOKIE_SECRET          = "dfafafa"
+	DOMAIN                 = "localhost"
 )

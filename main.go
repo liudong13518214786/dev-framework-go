@@ -6,7 +6,10 @@ import (
 )
 
 func init() {
+	//初始化redis连接池
 	cache.InitRedisPool()
+	//初始化db连接池
+
 }
 
 func main() {
