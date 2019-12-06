@@ -30,7 +30,7 @@ func (s *CookieManger) GetSessionid() string {
 }
 
 func (s *CookieManger) GetSecureCookie() string {
-	res, err := s.C.Cookie(C.SESSION_NAME)
+	res, err := s.C.Cookie(s.SessionName)
 	if err != nil {
 		//没有获取到，为登陆状态
 		return ""

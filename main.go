@@ -2,7 +2,7 @@ package main
 
 import (
 	"dev-framework-go/pkg/cache"
-	"github.com/gin-gonic/gin"
+	"dev-framework-go/routes"
 )
 
 func init() {
@@ -13,6 +13,6 @@ func init() {
 }
 
 func main() {
-	r := gin.Default()
-	r.GET("")
+	r := routes.InitRoute()
+	_ = r.Run()
 }
