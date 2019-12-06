@@ -1,6 +1,7 @@
 package main
 
 import (
+	"dev-framework-go/conf"
 	"dev-framework-go/pkg/cache"
 	"dev-framework-go/routes"
 )
@@ -14,5 +15,5 @@ func init() {
 
 func main() {
 	r := routes.InitRoute()
-	_ = r.Run()
+	_ = r.Run(conf.PORT)
 }

@@ -12,4 +12,5 @@ const (
 	COOKIE_SECRET           = "dfafafa"
 	DOMAIN                  = "localhost"
 	COOKIE_EXPIRE_TIME      = 60
+	PORT                    = ":8890"
 )
