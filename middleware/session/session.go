@@ -6,6 +6,6 @@ import (
 
 func Session() gin.HandlerFunc {
 	return func(c *gin.Context) {
-
+		c.Cookie()
 	}
 }
