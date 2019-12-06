@@ -1,5 +1,6 @@
 package util
 
+import "C"
 import (
 	"dev-framework-go/conf"
 	"encoding/base64"
@@ -29,7 +30,7 @@ func (s *CookieManger) GetSessionid() string {
 }
 
 func (s *CookieManger) GetSecureCookie() string {
-	res, err := s.C.Cookie(conf.SESSION_NAME)
+	res, err := s.C.Cookie(C.SESSION_NAME)
 	if err != nil {
 		//没有获取到，为登陆状态
 		return ""
