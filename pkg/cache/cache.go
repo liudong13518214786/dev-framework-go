@@ -85,3 +85,46 @@ func DelKey(key string) bool {
 	}
 	return true
 }
+
+func HSetKey(key, field, value string, expireTime int) bool {
+	conn := pool.Get()
+	defer conn.Close()
+	_, err := conn.Do("HSET", key, field, value)
+	if err != nil {
+		logger.Error("[HSET KEY ERROR]key=%s, field=%s, value=%s", key, field, value)
+		return false
+	}
+	if expireTime != 0 {
+		logger.Error("[SET KEY EXPIRE ERROR]key=%s, expire_time=%d", key, expireTime)
+		return false
+	}
+	return true
+}
+
+func HGetKey(key, field string) string {
+	conn := pool.Get()
+	defer conn.Close()
+	result, err := redis.String(conn.Do("HGET", key, field))
+	if err != nil {
+		logger.Error("[HGET KEY ERROR]key=%s, field=%s", key, field)
+		return ""
+	}
+	return result
+}
+
+func HDelKey(key string) {
+	conn := pool.Get()
+	defer conn.Close()
+	replay, err := redis.Strings(conn.Do("HKEYS", key))
+	if err != nil {
+		logger.Error("[HKEYS ERROR]key=%s", key)
+		return
+	}
+	for k, _ := range replay {
+		val := replay[k]
+		_, err := conn.Do("HDEL", key, val)
+		if err != nil {
+			logger.Error("[HDEL KEY ERROR]key=%s", key)
+		}
+	}
+}
