@@ -1,5 +1,7 @@
 package conf
 
+import "github.com/gin-gonic/gin"
+
 const (
 	JWTTOKEN                = "123123"
 	REDIS_NETWORK           = "tcp"
@@ -13,4 +15,19 @@ const (
 	DOMAIN                  = "localhost"
 	COOKIE_EXPIRE_TIME      = 60
 	PORT                    = ":8890"
+	APP_ENV                 = "release"
+	TIME_FORMAT             = "2006-01-02 15:04:05"
 )
+
+func InitAppEnv(env string) {
+	switch env {
+	case "debug":
+		gin.SetMode(gin.DebugMode)
+	case "test":
+		gin.SetMode(gin.TestMode)
+	case "release":
+		gin.SetMode(gin.ReleaseMode)
+	default:
+		gin.SetMode(gin.DebugMode)
+	}
+}

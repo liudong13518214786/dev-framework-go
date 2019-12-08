@@ -12,7 +12,6 @@ import (
 //func tet()  {
 //	grds.NewClient()
 //}
-
 var pool *redis.Pool
 
 func InitRedisPool() {
