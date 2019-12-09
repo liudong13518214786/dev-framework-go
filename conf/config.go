@@ -17,6 +17,13 @@ const (
 	PORT                    = ":8890"
 	APP_ENV                 = "release"
 	TIME_FORMAT             = "2006-01-02 15:04:05"
+	DB_HOST                 = "dbi.mshare.cn"
+	DB_PORT                 = 1094
+	DB_USER                 = "dbuser"
+	DB_PASS                 = "dY8*6fN6Z#xSOg$wG9zDATTe"
+	DB_NAME                 = "sxsdb"
+	DB_MaxOpenConns         = 10
+	DB_MaxIdleConns         = 10
 )
 
 func InitAppEnv(env string) {
