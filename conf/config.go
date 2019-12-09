@@ -21,7 +21,7 @@ const (
 	DB_PORT                 = 1094
 	DB_USER                 = "dbuser"
 	DB_PASS                 = "dY8*6fN6Z#xSOg$wG9zDATTe"
-	DB_NAME                 = "sxsdb"
+	DB_NAME                 = "tjdb"
 	DB_MaxOpenConns         = 10
 	DB_MaxIdleConns         = 10
 )
