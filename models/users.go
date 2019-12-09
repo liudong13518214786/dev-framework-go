@@ -8,6 +8,7 @@ import (
 
 //测试数据库
 type Project struct {
+	Id        sql.NullInt64
 	Uuid      sql.NullString
 	PjName    sql.NullString
 	ShowName  sql.NullString
@@ -17,11 +18,11 @@ type Project struct {
 }
 
 //查询单条
-func SelectTags(sqlstring string, parm ...interface{}) *Project {
+func SelectTags(sqlstring string, return_field []string) *Project {
 	var p Project
 	fmt.Println(sqlstring)
-	rows := db.DBPool.QueryRow(sqlstring, parm...)
-	err := rows.Scan(&p.Uuid, &p.PjName, &p.ShowName, &p.Descs, &p.BuildTime, &p.Status)
+	rows := db.DBPool.QueryRow(sqlstring)
+	err := rows.Scan(&p.Uuid, &p.Descs, &p.BuildTime)
 	if err != nil {
 
 	}

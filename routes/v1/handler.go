@@ -2,17 +2,17 @@ package v1
 
 import (
 	"dev-framework-go/models"
+	"dev-framework-go/pkg/util"
 	"github.com/gin-gonic/gin"
 )
 
 func TestHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		a := c.Query("name")
-		res := models.SelectTags("select uuid,descs,build_time, status from project")
+		sql := util.SelectSql("project", []string{"uuid", "descs", "build_time"}, nil, "", "", "")
+		res := models.SelectTags(sql, []string{"uuid", "descs", "build_time"})
 		//res:=models.SelectTags("select * from project")
 		c.JSON(200, gin.H{
 			"code": 100,
-			"msg":  a,
 			"data": res,
 		})
 	}

@@ -13,7 +13,7 @@ func EncodeMD5(signature string) string {
 	return hex.EncodeToString(t.Sum(nil))
 }
 
-func SelectSql(select_item []string, table string, condtion map[string]interface{}, orderBy string, limit, offset string) string {
+func SelectSql(table string, select_item []string, condtion map[string]interface{}, orderBy string, limit, offset string) string {
 	sql := fmt.Sprintf("\"%s\"", strings.Join(select_item, "\",\""))
 	var where string
 	sql = fmt.Sprintf("select %s from %s", sql, table)
@@ -22,8 +22,9 @@ func SelectSql(select_item []string, table string, condtion map[string]interface
 		for k, v := range condtion {
 			where += fmt.Sprintf(" \"%s\"='%v' AND", k, v)
 		}
+		where = where[:len(where)-3]
 	}
-	where = where[:len(where)-3]
+
 	res := sql + where
 	if orderBy != "" {
 		res += orderBy
