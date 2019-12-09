@@ -9,7 +9,7 @@ import (
 func TestHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		sql := util.SelectSql("project", []string{"uuid", "descs", "build_time"}, nil, "", "", "")
-		res := models.SelectTags(sql, []string{"uuid", "descs", "build_time"})
+		res := models.GetBillList(sql)
 		//res:=models.SelectTags("select * from project")
 		c.JSON(200, gin.H{
 			"code": 100,
