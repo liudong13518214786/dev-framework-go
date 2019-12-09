@@ -8,7 +8,7 @@ import (
 func TestHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		a := c.Query("name")
-		res := models.SelectTags("select uuid,pj_name,show_name,descs,build_time, status from project")
+		res := models.SelectTags("select uuid,descs,build_time, status from project")
 		//res:=models.SelectTags("select * from project")
 		c.JSON(200, gin.H{
 			"code": 100,

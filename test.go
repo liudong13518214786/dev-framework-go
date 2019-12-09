@@ -1,51 +1,75 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
-	"strconv"
+	"strings"
 )
-import _ "github.com/lib/pq"
 
-type Users struct {
-	uuid         sql.NullString
-	company_uuid sql.NullString
+func SelectSql(select_item []string, table string, condtion map[string]interface{}, orderBy string, limit, offset string) string {
+	sql := fmt.Sprintf("\"%s\"", strings.Join(select_item, "\",\""))
+	var where string
+	sql = fmt.Sprintf("select %s from %s", sql, table)
+	if condtion != nil {
+		where = " WHERE"
+		for k, v := range condtion {
+			where += fmt.Sprintf(" \"%s\"='%v' AND", k, v)
+		}
+	}
+	where = where[:len(where)-3]
+	res := sql + where
+	if orderBy != "" {
+		res += orderBy
+	}
+	if limit != "" {
+		res += fmt.Sprintf(" LIMIT %s", limit)
+	}
+	if offset != "" {
+		res += fmt.Sprintf(" OFFSET %s", offset)
+	}
+	return res
 }
 
-func ToNullString(s string) sql.NullString {
-	return sql.NullString{String: s, Valid: s != ""}
+func InsertSql(table string, insert_item map[string]interface{}) {
+	var insertKey string
+	var insertValue string
+	for k, v := range insert_item {
+		insertKey += fmt.Sprintf("\"%s\",", k)
+		insertValue += fmt.Sprintf("'%v',", v)
+	}
+	insertKey = fmt.Sprintf("(%s)", insertKey[:len(insertKey)-1])
+	fmt.Println(insertKey)
+	fmt.Println(insertValue)
+	sql := fmt.Sprintf("INSERT INTO %s%s VALUES(%s)", table, insertKey, insertValue[:len(insertValue)-1])
+	fmt.Println(sql)
 }
 
-func ToNullInt64(s string) sql.NullInt64 {
-	i, err := strconv.Atoi(s)
-	return sql.NullInt64{Int64: int64(i), Valid: err == nil}
+func UpdateSql(table string, update_item map[string]interface{}, condtion map[string]interface{}) string {
+	var updateStr string
+	for k, v := range update_item {
+		updateStr += fmt.Sprintf("\"%s\"='%v',", k, v)
+	}
+	sql := fmt.Sprintf("UPDATE %s SET %s", table, updateStr[:len(updateStr)-1])
+	if condtion != nil {
+		var cond string
+		for k, v := range condtion {
+			cond += fmt.Sprintf(" \"%s\"='%v' AND", k, v)
+		}
+		sql += fmt.Sprintf(" WHERE %s", cond[:len(cond)-3])
+	}
+	return sql
+
 }
 
 func main() {
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
-		"password=%s dbname=%s sslmode=disable",
-		"dbi.mshare.cn", 1094, "dbuser", "dY8*6fN6Z#xSOg$wG9zDATTe", "sxsdb")
-	db, err := sql.Open("postgres", psqlInfo)
-	if err != nil {
-		panic(err)
+	a := map[string]interface{}{
+		"name": "liudong",
+		"age":  1,
+		"sex":  "男",
 	}
-	defer db.Close()
-	err = db.Ping()
-	if err != nil {
-		panic(err)
+	c := map[string]interface{}{
+		"a": 123,
+		"v": "21assa",
 	}
-
-	fmt.Println("Successfully connected!")
-	//db.SetMaxOpenConns(10)
-	//db.SetMaxIdleConns(10)
-	//db.SetConnMaxLifetime()
-	var user Users
-	row := db.QueryRow("select uuid, company_uuid from users where uuid=$1", "usr_xiafo5poeszu")
-	err = row.Scan(&user.uuid, &user.company_uuid)
-	if err == sql.ErrNoRows {
-		fmt.Println(123)
-	}
-	//后续处理
-	fmt.Println(user.company_uuid.String)
-	fmt.Println(user.uuid.String)
+	b := UpdateSql("users", a, c)
+	fmt.Println(b)
 }
