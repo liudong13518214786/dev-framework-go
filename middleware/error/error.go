@@ -29,10 +29,11 @@ func CatchError() gin.HandlerFunc {
 				body = strings.ReplaceAll(body, "[request_ua]", context.Request.UserAgent())
 				body = strings.ReplaceAll(body, "[error_debug]", DebugStack)
 				//cCp := context.Copy()
-				go func() {
-					_ = util.SendMail(fmt.Sprintf("【重要错误】%s 项目出错了！", conf.APPNAME), body)
-
-				}()
+				if conf.ERRORNOTIFYOPEN == true {
+					go func() {
+						_ = util.SendMail(fmt.Sprintf("【重要错误】%s 项目出错了！", conf.APPNAME), body)
+					}()
+				}
 				context.JSON(http.StatusOK, gin.H{
 					"code": 500,
 					"msg":  "系统异常",

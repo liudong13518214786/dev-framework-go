@@ -17,9 +17,6 @@ func EncodeMD5(signature string) string {
 }
 
 func SendMail(subject string, body string) error {
-	if conf.ERRORNOTIFYOPEN == false {
-		return nil
-	}
 	m := gomail.NewMessage()
 	//设置发件人
 	m.SetHeader("From", conf.SYSTEMEMAILUSER)
