@@ -26,11 +26,11 @@ const (
 	DB_MaxOpenConns         = 10
 	DB_MaxIdleConns         = 10
 	ERRORNOTIFYOPEN    bool = true
-	SYSTEMEMAILUSER         = "846723063@qq.com"
-	EMAILTOUSER             = "liudong@mshare.cn" //多个用户逗号隔开
-	SYSTEMEMAILHOST         = "smtp.qq.com"
-	SYSTEMEMAILPORT         = 587
-	SYSTEMEMAILPASS         = "ld954120liudong"
+	SYSTEMEMAILUSER         = "liudong@mshare.cn"
+	EMAILTOUSER             = "846723063@qq.com" //多个用户逗号隔开
+	SYSTEMEMAILHOST         = "smtp.mxhichina.com"
+	SYSTEMEMAILPORT         = 25
+	SYSTEMEMAILPASS         = "LD@qq.com"
 )
 
 func InitAppEnv(env string) {

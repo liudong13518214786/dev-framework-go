@@ -25,8 +25,8 @@ func main() {
 
 		}
 	}()
-	a := []string{"123"}
-
-	fmt.Println(a[:len(a)-3])
+	a := "123"
+	b := strings.Split(a, ",")
+	fmt.Println(b)
 	//fmt.Println(b)
 }
