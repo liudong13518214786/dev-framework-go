@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"dev-framework-go/conf"
 	"encoding/hex"
+	"fmt"
 	"github.com/wonderivan/logger"
 	"gopkg.in/gomail.v2"
 	"strings"
@@ -28,8 +29,9 @@ func SendMail(subject string, body string) error {
 	m.SetHeader("Subject", subject)
 	m.SetBody("text/html", body)
 	d := gomail.NewDialer(conf.SYSTEMEMAILHOST, conf.SYSTEMEMAILPORT, conf.SYSTEMEMAILUSER, conf.SYSTEMEMAILPASS)
-
+	fmt.Println(d)
 	err := d.DialAndSend(m)
+	fmt.Println(err)
 	if err != nil {
 		logger.Error("[SEND ERROR EMAIL FAIL]", err)
 	}

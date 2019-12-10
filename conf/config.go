@@ -29,7 +29,7 @@ const (
 	SYSTEMEMAILUSER         = "846723063@qq.com"
 	EMAILTOUSER             = "liudong@mshare.cn" //多个用户逗号隔开
 	SYSTEMEMAILHOST         = "smtp.qq.com"
-	SYSTEMEMAILPORT         = 465
+	SYSTEMEMAILPORT         = 587
 	SYSTEMEMAILPASS         = "ld954120liudong"
 )
 
