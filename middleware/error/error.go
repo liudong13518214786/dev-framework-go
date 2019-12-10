@@ -26,6 +26,7 @@ func CatchError() gin.HandlerFunc {
 				body := strings.ReplaceAll(emailInfo, "[error_info]", fmt.Sprintf("%s", r))
 				body = strings.ReplaceAll(body, "[request_time]", util.GetNowTime())
 				body = strings.ReplaceAll(body, "[request_url]", requestUrl)
+				body = strings.ReplaceAll(body, "[request_ip]", context.ClientIP())
 				body = strings.ReplaceAll(body, "[request_ua]", context.Request.UserAgent())
 				body = strings.ReplaceAll(body, "[error_debug]", DebugStack)
 				//cCp := context.Copy()
