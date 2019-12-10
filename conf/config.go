@@ -24,6 +24,12 @@ const (
 	DB_NAME                 = "mx_bill"
 	DB_MaxOpenConns         = 10
 	DB_MaxIdleConns         = 10
+	ERRORNOTIFYOPEN    bool = true
+	SYSTEMEMAILUSER         = "846723063@qq.com"
+	EMAILTOUSER             = "liudong@mshare.cn" //多个用户逗号隔开
+	SYSTEMEMAILHOST         = "smtp.qq.com"
+	SYSTEMEMAILPORT         = 465
+	SYSTEMEMAILPASS         = "ld954120liudong"
 )
 
 func InitAppEnv(env string) {
