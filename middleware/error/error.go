@@ -12,6 +12,7 @@ func CatchError() gin.HandlerFunc {
 			if r := recover(); r != nil {
 				logger.Error("[PINIC ERROR]", r)
 				//context.Abort()
+				//_ = util.SendMail(fmt.Sprintf("【重要错误】%s 项目出错了！", conf.APPNAME), "")
 				context.JSON(http.StatusOK, gin.H{
 					"code": 500,
 					"msg":  "系统异常",

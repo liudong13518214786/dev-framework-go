@@ -15,7 +15,7 @@ func EncodeMD5(signature string) string {
 	return hex.EncodeToString(t.Sum(nil))
 }
 
-func SendMail(toUser []string, subject string, body string) error {
+func SendMail(subject string, body string) error {
 	if conf.ERRORNOTIFYOPEN == false {
 		return nil
 	}

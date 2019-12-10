@@ -3,6 +3,7 @@ package conf
 import "github.com/gin-gonic/gin"
 
 const (
+	APPNAME                 = "开发框架测试"
 	JWTTOKEN                = "123123"
 	REDIS_NETWORK           = "tcp"
 	REDIS_ADDRESS           = "127.0.0.1:6379"
