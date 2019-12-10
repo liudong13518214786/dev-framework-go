@@ -1,6 +1,7 @@
 package routes
 
 import (
+	diyerror "dev-framework-go/middleware/error"
 	"dev-framework-go/middleware/log"
 	v1 "dev-framework-go/routes/v1"
 	"github.com/gin-gonic/gin"
@@ -10,6 +11,7 @@ func InitRoute() *gin.Engine {
 	r := gin.New()
 	r.Use(log.DiyLogger())
 	r.Use(gin.Recovery())
+	r.Use(diyerror.CatchError())
 	apiv1 := r.Group("/api/v1")
 	apiv1.Use()
 	{
