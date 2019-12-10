@@ -7,6 +7,7 @@ import (
 	"github.com/wonderivan/logger"
 	"gopkg.in/gomail.v2"
 	"strings"
+	"time"
 )
 
 func EncodeMD5(signature string) string {
@@ -33,4 +34,9 @@ func SendMail(subject string, body string) error {
 		logger.Error("[SEND ERROR EMAIL FAIL]", err)
 	}
 	return err
+}
+
+func GetNowTime() string {
+	now := time.Now()
+	return now.Format(conf.TIME_FORMAT)
 }
