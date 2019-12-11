@@ -100,7 +100,6 @@ func HSetKey(key, field, value string, expireTime int) bool {
 			return false
 		}
 	}
-	logger.Info("[HSET KEY SUCCESS]key=%s, field=%s, value=%s", key, field, value)
 	return true
 }
 

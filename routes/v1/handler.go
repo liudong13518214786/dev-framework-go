@@ -37,6 +37,7 @@ func LoginHandler() gin.HandlerFunc {
 			return
 		}
 		s.SessionSet(c, "useruuid", username, conf.COOKIE_EXPIRE_TIME)
+		//time.Sleep(2)
 		Useruuid := s.SessionGet(c, "useruuid")
 		c.JSON(http.StatusOK, gin.H{
 			"code": conf.SUCCESS,
