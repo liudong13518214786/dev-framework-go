@@ -13,11 +13,11 @@ func SessionGet(c *gin.Context, key string) string {
 	return sessionManage.Get(key)
 }
 
-func SessionSet(c *gin.Context, key string, value string, expireTime int) {
+func SessionSet(c *gin.Context, key string, value string, expireTime int) bool {
 	cookieManger := &util.CookieManger{C: c, SessionName: conf.SESSION_NAME, ExpireTime: conf.COOKIE_EXPIRE_TIME}
 	cookieId := cookieManger.GetSessionid()
 	sessionManage := &util.SessionManager{SessionId: cookieId}
-	sessionManage.Set(key, value, expireTime)
+	return sessionManage.Set(key, value, expireTime)
 }
 
 func SessionDel(c *gin.Context) {

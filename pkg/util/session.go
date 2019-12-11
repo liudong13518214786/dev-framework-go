@@ -8,8 +8,8 @@ type SessionManager struct {
 	SessionId string
 }
 
-func (s *SessionManager) Set(key, value string, expireTime int) {
-	cache.HSetKey(s.SessionId, key, value, expireTime)
+func (s *SessionManager) Set(key, value string, expireTime int) bool {
+	return cache.HSetKey(s.SessionId, key, value, expireTime)
 }
 
 func (s *SessionManager) Get(key string) string {

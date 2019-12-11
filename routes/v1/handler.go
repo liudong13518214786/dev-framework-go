@@ -40,7 +40,7 @@ func LoginHandler() gin.HandlerFunc {
 		if Useruuid == "" {
 			s.SessionSet(c, "useruuid", username, conf.COOKIE_EXPIRE_TIME)
 		}
-
+		//todo 一边设置session一边取session,第一次会取不到
 		Useruuid = s.SessionGet(c, "useruuid")
 		c.JSON(http.StatusOK, gin.H{
 			"code": conf.SUCCESS,
