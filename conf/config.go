@@ -25,7 +25,7 @@ const (
 	DB_NAME                 = "mx_bill"
 	DB_MaxOpenConns         = 10
 	DB_MaxIdleConns         = 10
-	ERRORNOTIFYOPEN    bool = true
+	ERRORNOTIFYOPEN    bool = false
 	SYSTEMEMAILUSER         = "liudong@mshare.cn"
 	EMAILTOUSER             = "846723063@qq.com" //多个用户逗号隔开
 	SYSTEMEMAILHOST         = "smtp.mxhichina.com"

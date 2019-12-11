@@ -11,6 +11,7 @@ import (
 	"strings"
 )
 
+//捕获异常中间件
 func CatchError() gin.HandlerFunc {
 	return func(context *gin.Context) {
 		defer func() {

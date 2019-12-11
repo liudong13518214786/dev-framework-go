@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+//验证登录中间件
 func Session() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		cookieManger := util.CookieManger{c, conf.SESSION_NAME, conf.COOKIE_EXPIRE_TIME}

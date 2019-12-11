@@ -6,6 +6,7 @@ const (
 	INVALID_PARAMS  = 400
 	ValidationError = 401
 	NOT_LOGIN       = 101
+	MISS_PARAMS     = 102
 )
 
 var MsgContent = map[int]string{
@@ -14,6 +15,7 @@ var MsgContent = map[int]string{
 	INVALID_PARAMS:  "参数错误",
 	ValidationError: "认证失败",
 	NOT_LOGIN:       "未登录",
+	MISS_PARAMS:     "缺少参数",
 }
 
 func GetMessage(code int) string {
