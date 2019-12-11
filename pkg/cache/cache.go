@@ -94,9 +94,13 @@ func HSetKey(key, field, value string, expireTime int) bool {
 		return false
 	}
 	if expireTime != 0 {
-		logger.Error("[SET KEY EXPIRE ERROR]key=%s, expire_time=%d", key, expireTime)
-		return false
+		_, err := conn.Do("EXPIRE", key, expireTime)
+		if err != nil {
+			logger.Error("[SET KEY EXPIRE ERROR]key=%s, expire_time=%d", key, expireTime)
+			return false
+		}
 	}
+	logger.Info("[HSET KEY SUCCESS]key=%s, field=%s, value=%s", key, field, value)
 	return true
 }
 
@@ -105,7 +109,7 @@ func HGetKey(key, field string) string {
 	defer conn.Close()
 	result, err := redis.String(conn.Do("HGET", key, field))
 	if err != nil {
-		logger.Error("[HGET KEY ERROR]key=%s, field=%s", key, field)
+		logger.Error("[HGET KEY ERROR]key=%s, field=%s:error:%s", key, field, err)
 		return ""
 	}
 	return result

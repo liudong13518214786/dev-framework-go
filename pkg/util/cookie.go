@@ -8,12 +8,14 @@ import (
 	"github.com/google/uuid"
 	"github.com/wonderivan/logger"
 	"strings"
+	"sync"
 )
 
 type CookieManger struct {
 	C           *gin.Context
 	SessionName string
 	ExpireTime  int
+	mu          sync.Mutex
 }
 
 func (s *CookieManger) SetSecureCookie(sessionId string) {
@@ -22,9 +24,12 @@ func (s *CookieManger) SetSecureCookie(sessionId string) {
 }
 
 func (s *CookieManger) GetSessionid() string {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	sessionId := s.GetSecureCookie()
 	if sessionId == "" {
 		sessionId = CreatSessionId()
+		s.SetSecureCookie(sessionId)
 	}
 	return sessionId
 }

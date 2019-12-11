@@ -1,32 +1,50 @@
 package main
 
 import (
-	"dev-framework-go/conf"
-	"dev-framework-go/pkg/util"
+	"encoding/json"
 	"fmt"
-	"runtime/debug"
-	"strings"
+	"reflect"
 )
 
-func main() {
-	defer func() {
-		if r := recover(); r != nil {
-			DebugStack := ""
-			for _, v := range strings.Split(string(debug.Stack()), "\n") {
-				DebugStack += v + "<br>"
-			}
-			fmt.Println(DebugStack)
-			emailInfo := conf.EmailDetail
-			body := strings.ReplaceAll(emailInfo, "[error_info]", fmt.Sprintf("%s", r))
-			body = strings.ReplaceAll(body, "[request_time]", util.GetNowTime())
-			body = strings.ReplaceAll(body, "[request_url]", "")
-			body = strings.ReplaceAll(body, "[request_ua]", "")
-			body = strings.ReplaceAll(body, "[error_debug]", DebugStack)
+const tagName = "validate"
 
-		}
-	}()
-	a := "123"
-	b := strings.Split(a, ",")
-	fmt.Println(b)
-	//fmt.Println(b)
+type employee struct {
+	ID       int     `json:"id"`
+	Name     string  `json:"名字" validate:"presence,min=2,max=40"`
+	Age      int     `json:"年龄"`
+	Desc     string  `json:"描述" back:"好看否"`
+	weight   float64 `json:"weight" 单位:"kg"`
+	Salary   float64 `json:"-"`
+	Email    string  `validate:"email,required"`
+	MateName string  `json:"mate_name,omitempty"`
+}
+
+func main() {
+	zhangsan := employee{
+		ID:       1,
+		Name:     "张三",
+		Age:      18,
+		Desc:     "秀色可餐",
+		weight:   48.0,
+		Salary:   12.0,
+		MateName: "Prince",
+	}
+
+	fmt.Println(zhangsan)
+	re, _ := json.Marshal(zhangsan)
+	fmt.Println(string(re))
+
+	t := reflect.ValueOf(zhangsan)
+	//c :=reflect.Ptr
+	//fmt.Println("Type: ",t.Name())
+	fmt.Println("Kind: ", t.Kind())
+	fmt.Println("Kind: ", t.NumField())
+	//fmt.Println("Kind: ",t.Kind())
+	//fmt.Println(t.NumField())
+	for i := 0; i < t.NumField(); i++ {
+		//field := t.Field(i)
+		tag := t.Type().Field(i)
+		fmt.Println(tag.Tag.Get("json"))
+		//fmt.Printf("%d. %v(%v), tag:'%v'\n", i+1, field.Name, field.Type.Name(), tag)
+	}
 }

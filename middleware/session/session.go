@@ -2,7 +2,7 @@ package session
 
 import (
 	"dev-framework-go/conf"
-	"dev-framework-go/pkg/util"
+	s "dev-framework-go/pkg/session"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -10,10 +10,11 @@ import (
 //验证登录中间件
 func Session() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		cookieManger := util.CookieManger{c, conf.SESSION_NAME, conf.COOKIE_EXPIRE_TIME}
-		cookieId := cookieManger.GetSessionid()
-		sessionManage := util.SessionManager{cookieId}
-		userUuid := sessionManage.Get("useruuid")
+		userUuid := s.SessionGet(c, "useruuid")
+		//cookieManger := util.CookieManger{c, conf.SESSION_NAME, conf.COOKIE_EXPIRE_TIME}
+		//cookieId := cookieManger.GetSessionid()
+		//sessionManage := util.SessionManager{cookieId}
+		//userUuid := session.Get("useruuid")
 		code := conf.SUCCESS
 		if userUuid == "" {
 			code = conf.NOT_LOGIN
