@@ -24,6 +24,8 @@ func (s *CookieManger) SetSecureCookie(sessionId string) {
 }
 
 func (s *CookieManger) GetSessionid() string {
+	s.mu.Lock()
+	defer s.mu.Unlock()
 	sessionId := s.GetSecureCookie()
 	if sessionId == "" {
 		sessionId = CreatSessionId()
@@ -33,8 +35,6 @@ func (s *CookieManger) GetSessionid() string {
 }
 
 func (s *CookieManger) GetSecureCookie() string {
-	s.mu.Lock()
-	defer s.mu.Unlock()
 	res, err := s.C.Cookie(s.SessionName)
 	if err != nil {
 		//没有获取到，为登陆状态
