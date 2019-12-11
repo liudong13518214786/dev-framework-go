@@ -1,6 +1,8 @@
 package util
 
-import "dev-framework-go/pkg/cache"
+import (
+	"dev-framework-go/pkg/cache"
+)
 
 type SessionManager struct {
 	SessionId string
