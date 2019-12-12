@@ -24,6 +24,11 @@ func InitRedisPool() {
 				logger.Error("[INIT REDIS POOL ERROR]")
 				return nil, err
 			}
+			_, err = c.Do("AUTH", conf.REDIS_PASS)
+			if err != nil {
+				c.Close()
+				return nil, err
+			}
 			return c, nil
 		},
 		// 用于检查连接被再次使用之前，连接池中的运行状况
