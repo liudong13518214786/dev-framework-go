@@ -14,6 +14,7 @@ func InitRoute() *gin.Engine {
 	r.Use(gin.Recovery())
 	r.Use(diyerror.CatchError())
 	r.GET("/api/v1/login", v1.LoginHandler())
+	r.GET("/api/v1/logout", v1.LogOutHandler())
 	apiv1 := r.Group("/api/v1")
 	apiv1.Use(session.Session())
 	{
