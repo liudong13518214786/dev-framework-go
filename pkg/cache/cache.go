@@ -2,8 +2,10 @@ package cache
 
 import (
 	"dev-framework-go/conf"
+	"fmt"
 	"github.com/garyburd/redigo/redis"
 	"github.com/wonderivan/logger"
+	"os"
 	"time"
 )
 
@@ -27,6 +29,7 @@ func InitRedisPool() {
 		// 用于检查连接被再次使用之前，连接池中的运行状况
 		TestOnBorrow: func(c redis.Conn, t time.Time) error {
 			_, err := c.Do("PING")
+			fmt.Println(err)
 			if err != nil {
 				logger.Error("[PING REDIS ERROR]")
 				return err
@@ -42,7 +45,12 @@ func InitRedisPool() {
 		//如果wait是True并且达到了最大连接数，那么Get()方法回等待一个连接返回到池中
 		Wait: conf.REDIS_WAIT,
 	}
-	logger.Debug("[INIT REDIS POOL SUCCESS]")
+	_, err := pool.Dial()
+	if err == nil {
+		logger.Debug("[INIT REDIS POOL SUCCESS]")
+	} else {
+		os.Exit(0)
+	}
 }
 
 func SetKey(key string, value interface{}, expire_time int64) bool {
