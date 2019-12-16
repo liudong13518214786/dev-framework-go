@@ -19,7 +19,7 @@ type Project struct {
 	Business_status sql.NullString
 	Pay_time        sql.NullString
 	Refund_time     sql.NullString
-	Total_price     sql.NullString
+	Total_price     sql.NullFloat64
 	Goods_star      sql.NullString
 }
 

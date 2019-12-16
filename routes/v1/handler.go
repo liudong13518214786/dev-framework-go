@@ -4,6 +4,7 @@ import (
 	"dev-framework-go/conf"
 	"dev-framework-go/models"
 	s "dev-framework-go/pkg/session"
+	"fmt"
 	"net/http"
 	//"dev-framework-go/pkg/util"
 	"github.com/gin-gonic/gin"
@@ -17,12 +18,48 @@ import (
 
 func TestHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		var result []map[string]interface{}
 		//Useruuid := s.SessionGet(c, "useruuid")
 		res := models.GetBillList("10", "0", "")
+		for index := 0; index < len(res); index++ {
+			order_business_status := ""
+			if res[index].Order_status.String == "pay_success" {
+				if conf.BILL_BUSINESS_STATUS[res[index].Business_status.String] != "" {
+					order_business_status = conf.BILL_BUSINESS_STATUS[res[index].Business_status.String]
+				} else {
+					order_business_status = conf.BILL_PAY_STATUS["pay_success"]
+				}
+			} else {
+				order_business_status = conf.BILL_PAY_STATUS[res[index].Order_status.String]
+			}
+			transaction_time := ""
+			if res[index].Order_status.String == "pay_success" && res[index].Pay_time.String != "" {
+				transaction_time = ""
+			}
+			if res[index].Order_status.String == "refunding" {
+				transaction_time = ""
+			}
+			if res[index].Order_status.String == "refund" && res[index].Refund_time.String != "" {
+				transaction_time = ""
+			}
+			tmp := map[string]interface{}{
+				"order_no":              res[index].Uuid.String,
+				"order_business_status": order_business_status,
+				"business_status":       res[index].Business_status.String,
+				"order_status":          res[index].Order_status.String,
+				"business_type":         conf.GOODS_NAME[res[index].Business_type.String],
+				"total_price":           fmt.Sprintf("%.2f", res[index].Total_price.Float64/100),
+				"transaction_time":      transaction_time,
+				"goods_star":            res[index].Goods_star.String,
+				"content":               "",
+				"order_link":            "",
+			}
+			result = append(result, tmp)
+		}
 		c.JSON(200, gin.H{
 			"code": 100,
-			"data": "",
-			"msg":  res,
+			"data": result,
+			"msg":  "ok",
 		})
 	}
 }
