@@ -3,7 +3,6 @@ package routes
 import (
 	diyerror "dev-framework-go/middleware/error"
 	"dev-framework-go/middleware/log"
-	"dev-framework-go/middleware/session"
 	v1 "dev-framework-go/routes/v1"
 	"github.com/gin-gonic/gin"
 )
@@ -16,7 +15,7 @@ func InitRoute() *gin.Engine {
 	r.GET("/api/v1/login", v1.LoginHandler())
 	r.GET("/api/v1/logout", v1.LogOutHandler())
 	apiv1 := r.Group("/api/v1")
-	apiv1.Use(session.Session())
+	apiv1.Use()
 	{
 		apiv1.GET("/tag", v1.TestHandler())
 	}

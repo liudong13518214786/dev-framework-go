@@ -17,11 +17,11 @@ import (
 
 func TestHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		Useruuid := s.SessionGet(c, "useruuid")
+		//Useruuid := s.SessionGet(c, "useruuid")
 		res := models.GetBillList("10", "0", "")
 		c.JSON(200, gin.H{
 			"code": 100,
-			"data": Useruuid,
+			"data": "",
 			"msg":  res,
 		})
 	}

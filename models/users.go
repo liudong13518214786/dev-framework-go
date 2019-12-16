@@ -23,6 +23,12 @@ type Project struct {
 	Goods_star      sql.NullString
 }
 
+//func SqlNullToString(s sql.NullString) string {
+//	if s.Valid == true{
+//		return s.String
+//	}
+//}
+
 //查询单条
 func GetBillList(limit, offset, user_uuid string) []*Project {
 	var res []*Project
@@ -45,9 +51,8 @@ func GetBillList(limit, offset, user_uuid string) []*Project {
 		var p Project
 		err := rows.Scan(&p.Uuid, &p.User_uuid, &p.Order_status, &p.Business_type, &p.Build_time, &p.Expire_time,
 			&p.Extend, &p.Business_status, &p.Pay_time, &p.Refund_time, &p.Total_price, &p.Goods_star)
-
 		if err != nil {
-			fmt.Println(err)
+			logger.Error(err)
 		}
 		res = append(res, &p)
 	}
