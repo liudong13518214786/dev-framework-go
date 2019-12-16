@@ -2,6 +2,7 @@ package v1
 
 import (
 	"dev-framework-go/conf"
+	"dev-framework-go/models"
 	s "dev-framework-go/pkg/session"
 	"net/http"
 	//"dev-framework-go/pkg/util"
@@ -17,9 +18,11 @@ import (
 func TestHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		Useruuid := s.SessionGet(c, "useruuid")
+		res := models.GetBillList("10", "0", "")
 		c.JSON(200, gin.H{
 			"code": 100,
 			"data": Useruuid,
+			"msg":  res,
 		})
 	}
 }
