@@ -31,7 +31,12 @@ func InitDatabasePool() {
 }
 
 func SelectSql(table string, select_item []string, condtion map[string]interface{}, orderBy string, limit, offset string) string {
-	sqlstring := fmt.Sprintf("\"%s\"", strings.Join(select_item, "\",\""))
+	sqlstring := ""
+	if select_item == nil {
+		sqlstring = "*"
+	} else {
+		sqlstring = fmt.Sprintf("\"%s\"", strings.Join(select_item, "\",\""))
+	}
 	var where string
 	sqlstring = fmt.Sprintf("select %s from %s", sqlstring, table)
 	if condtion != nil {
