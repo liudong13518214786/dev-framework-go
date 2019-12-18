@@ -7,6 +7,8 @@ import (
 	"dev-framework-go/pkg/util"
 	"fmt"
 	"net/http"
+	"strconv"
+
 	//"dev-framework-go/pkg/util"
 	"github.com/gin-gonic/gin"
 )
@@ -17,10 +19,29 @@ import (
 //	Password string `form:"password"`
 //}
 
-func TestHandler() gin.HandlerFunc {
+func RecordHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		page := c.DefaultQuery("p", "1")
+		pageInt, err := strconv.Atoi(page)
+		if err != nil {
+			c.JSON(200, gin.H{
+				"code": 100,
+				"data": nil,
+				"msg":  "参数错误",
+			})
+			return
+		}
+		offset := (pageInt - 1) * conf.PERNUM
 		var res []map[string]interface{}
-		r := models.BillRecord(10, 0, "usr_lock2vidladc")
+		r := models.BillRecord(conf.PERNUM, offset, "usr_lock2vidladc")
+		if r == nil {
+			c.JSON(200, gin.H{
+				"code": 100,
+				"data": nil,
+				"msg":  "没有查询到数据",
+			})
+			return
+		}
 		for index := 0; index < len(r); index++ {
 			order_business_status := ""
 			if r[index].Order_status == "pay_success" {

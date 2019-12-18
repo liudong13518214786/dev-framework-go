@@ -17,7 +17,7 @@ func InitRoute() *gin.Engine {
 	apiv1 := r.Group("/api/v1")
 	apiv1.Use()
 	{
-		apiv1.GET("/tag", v1.TestHandler())
+		apiv1.GET("/record", v1.RecordHandler())
 	}
 	return r
 }

@@ -32,6 +32,7 @@ const (
 	SYSTEMEMAILHOST         = "smtp.mxhichina.com"
 	SYSTEMEMAILPORT         = 25
 	SYSTEMEMAILPASS         = "LD@qq.com"
+	PERNUM                  = 10 //每页显示条数
 )
 
 func InitAppEnv(env string) {
