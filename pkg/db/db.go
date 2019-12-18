@@ -23,6 +23,7 @@ func InitDatabasePool() {
 	}
 	DBPool.DB().SetMaxIdleConns(conf.DB_MaxIdleConns)
 	DBPool.DB().SetMaxOpenConns(conf.DB_MaxOpenConns)
+	DBPool.LogMode(true)
 	//DBPool.SetMaxOpenConns(conf.DB_MaxOpenConns)
 	//DBPool.SetMaxIdleConns(conf.DB_MaxIdleConns)
 	//defer dbPool.Close()

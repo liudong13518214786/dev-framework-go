@@ -4,6 +4,8 @@ import (
 	"dev-framework-go/conf"
 	"dev-framework-go/models"
 	s "dev-framework-go/pkg/session"
+	"dev-framework-go/pkg/util"
+	"fmt"
 	"net/http"
 	//"dev-framework-go/pkg/util"
 	"github.com/gin-gonic/gin"
@@ -17,10 +19,47 @@ import (
 
 func TestHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		models.BillRecord()
+		var res []map[string]interface{}
+		r := models.BillRecord(10, 0, "usr_lock2vidladc")
+		for index := 0; index < len(r); index++ {
+			order_business_status := ""
+			if r[index].Order_status == "pay_success" {
+				if conf.BILL_BUSINESS_STATUS[r[index].Business_status] != "" {
+					order_business_status = conf.BILL_BUSINESS_STATUS[r[index].Business_status]
+				} else {
+					order_business_status = conf.BILL_PAY_STATUS["pay_success"]
+				}
+			} else {
+				order_business_status = conf.BILL_PAY_STATUS[r[index].Order_status]
+			}
+			transaction_time := ""
+			if r[index].Order_status == "pay_success" && util.TransTime(r[index].Pay_time) != "" {
+				transaction_time = r[index].Pay_time.Format("2006/01/02 15:04")
+			}
+			if r[index].Order_status == "refunding" {
+				transaction_time = r[index].Pay_time.Format("2006/01/02 15:04")
+			}
+			if r[index].Order_status == "refund" && util.TransTime(r[index].Refund_time) != "" {
+				transaction_time = r[index].Refund_time.Format("2006/01/02 15:04")
+			}
+			tmp := map[string]interface{}{
+				"order_no":              r[index].Uuid,
+				"order_business_status": order_business_status,
+				"business_status":       r[index].Business_status,
+				"order_status":          r[index].Order_status,
+				"business_type":         conf.GOODS_NAME[r[index].Business_type],
+				"total_price":           fmt.Sprintf("%.2f", r[index].Total_price/100),
+				"transaction_time":      transaction_time,
+				"goods_star":            r[index].GoodsStar,
+				"content":               "",
+				"order_link":            fmt.Sprintf("http://dev-sxs-frontend.mshare.cn/my-orders?order_id=%s", r[index].Uuid),
+			}
+			res = append(res, tmp)
+		}
+		//content := fmt.Sprintf("%s%d个", p.OrderDetail.GoodsName, p.OrderDetail.GoodsNum
 		c.JSON(200, gin.H{
 			"code": 100,
-			"data": 12,
+			"data": res,
 			"msg":  "ok",
 		})
 	}

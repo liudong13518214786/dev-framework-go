@@ -41,3 +41,11 @@ func GetNowTime() string {
 func ArrayToSql(r []string) string {
 	return fmt.Sprintf("('%s')", strings.Join(r, "','"))
 }
+
+func TransTime(t time.Time) string {
+	s := t.Format(conf.TIME_FORMAT)
+	if s == "0001-01-01 00:00:00" { //golang的默认时间
+		return ""
+	}
+	return s
+}
