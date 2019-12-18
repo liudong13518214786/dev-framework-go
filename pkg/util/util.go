@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"dev-framework-go/conf"
 	"encoding/hex"
+	"fmt"
 	"github.com/wonderivan/logger"
 	"gopkg.in/gomail.v2"
 	"strings"
@@ -35,4 +36,8 @@ func SendMail(subject string, body string) error {
 func GetNowTime() string {
 	now := time.Now()
 	return now.Format(conf.TIME_FORMAT)
+}
+
+func ArrayToSql(r []string) string {
+	return fmt.Sprintf("('%s')", strings.Join(r, "','"))
 }

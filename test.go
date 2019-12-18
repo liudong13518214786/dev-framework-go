@@ -1,5 +1,10 @@
 package main
 
+import (
+	"dev-framework-go/pkg/util"
+	"fmt"
+)
+
 const tagName = "validate"
 
 type employee struct {
@@ -14,7 +19,9 @@ type employee struct {
 }
 
 func main() {
-	a := "2019-11-28T14:19:37.13769Z"
+	a := []string{"adf", "sda"}
+	s := util.ArrayToSql(a)
+	fmt.Println(s)
 
 	//	zhangsan := employee{
 	//		ID:       1,

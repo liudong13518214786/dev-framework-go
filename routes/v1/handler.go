@@ -17,10 +17,10 @@ import (
 
 func TestHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		res := models.GetBillList("10", "0", "")
+		models.BillRecord()
 		c.JSON(200, gin.H{
 			"code": 100,
-			"data": res,
+			"data": 12,
 			"msg":  "ok",
 		})
 	}

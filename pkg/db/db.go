@@ -1,29 +1,32 @@
 package db
 
 import (
-	"database/sql"
 	"dev-framework-go/conf"
 	"fmt"
+	"github.com/jinzhu/gorm"
 	"github.com/wonderivan/logger"
 	"strings"
 )
 import _ "github.com/lib/pq"
 
-var DBPool *sql.DB
+var DBPool *gorm.DB
 var err error
 
 func InitDatabasePool() {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=disable",
 		conf.DB_HOST, conf.DB_PORT, conf.DB_USER, conf.DB_PASS, conf.DB_NAME)
-	DBPool, err = sql.Open("postgres", psqlInfo)
+	DBPool, err = gorm.Open("postgres", psqlInfo)
+	//DBPool, err = sql.Open("postgres", psqlInfo)
 	if err != nil {
 		panic(err)
 	}
-	DBPool.SetMaxOpenConns(conf.DB_MaxOpenConns)
-	DBPool.SetMaxIdleConns(conf.DB_MaxIdleConns)
+	DBPool.DB().SetMaxIdleConns(conf.DB_MaxIdleConns)
+	DBPool.DB().SetMaxOpenConns(conf.DB_MaxOpenConns)
+	//DBPool.SetMaxOpenConns(conf.DB_MaxOpenConns)
+	//DBPool.SetMaxIdleConns(conf.DB_MaxIdleConns)
 	//defer dbPool.Close()
-	err = DBPool.Ping()
+	err = DBPool.DB().Ping()
 	if err != nil {
 		panic(err)
 	}

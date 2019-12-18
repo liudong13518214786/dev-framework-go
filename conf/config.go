@@ -23,9 +23,9 @@ const (
 	DB_PORT                 = 1094
 	DB_USER                 = "dbuser"
 	DB_PASS                 = "dY8*6fN6Z#xSOg$wG9zDATTe"
-	DB_NAME                 = "mx_bill"
-	DB_MaxOpenConns         = 10
-	DB_MaxIdleConns         = 10
+	DB_NAME                 = "sxsdb"
+	DB_MaxOpenConns         = 100
+	DB_MaxIdleConns         = 10 //空闲时的最大连接数
 	ERRORNOTIFYOPEN    bool = false
 	SYSTEMEMAILUSER         = "liudong@mshare.cn"
 	EMAILTOUSER             = "846723063@qq.com" //多个用户逗号隔开
