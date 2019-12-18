@@ -1,7 +1,6 @@
 package main
 
 import (
-	"dev-framework-go/pkg/util"
 	"fmt"
 )
 
@@ -19,10 +18,9 @@ type employee struct {
 }
 
 func main() {
-	a := []string{"adf", "sda"}
-	s := util.ArrayToSql(a)
-	fmt.Println(s)
-
+	a := fmt.Sprintf("%.2f", 19950/float64(100))
+	println(a)
+	fmt.Println(19950 / float64(100))
 	//	zhangsan := employee{
 	//		ID:       1,
 	//		Name:     "张三",

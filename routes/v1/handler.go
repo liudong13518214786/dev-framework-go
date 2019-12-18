@@ -42,6 +42,10 @@ func TestHandler() gin.HandlerFunc {
 			if r[index].Order_status == "refund" && util.TransTime(r[index].Refund_time) != "" {
 				transaction_time = r[index].Refund_time.Format("2006/01/02 15:04")
 			}
+			content := ""
+			for j := 0; j < len(r[index].OrderDetails); j++ {
+				content += fmt.Sprintf("%s%d个,", r[index].OrderDetails[j].Goods_name, r[index].OrderDetails[j].Goods_num)
+			}
 			tmp := map[string]interface{}{
 				"order_no":              r[index].Uuid,
 				"order_business_status": order_business_status,
@@ -51,7 +55,7 @@ func TestHandler() gin.HandlerFunc {
 				"total_price":           fmt.Sprintf("%.2f", r[index].Total_price/100),
 				"transaction_time":      transaction_time,
 				"goods_star":            r[index].GoodsStar,
-				"content":               "",
+				"content":               content,
 				"order_link":            fmt.Sprintf("http://dev-sxs-frontend.mshare.cn/my-orders?order_id=%s", r[index].Uuid),
 			}
 			res = append(res, tmp)
