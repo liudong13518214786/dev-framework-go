@@ -38,11 +38,11 @@ func main() {
 	quit := make(chan os.Signal)
 	signal.Notify(quit, os.Interrupt)
 	<-quit
-	logger.Debug("Server Shotdown...")
+	logger.Info("Server Shotdown...")
 	ctx, cancle := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancle()
 	if err := srv.Shutdown(ctx); err != nil {
 		logger.Fatal("Server Shutdown:", err)
 	}
-	logger.Debug("Server exiting")
+	logger.Info("Server exiting")
 }
