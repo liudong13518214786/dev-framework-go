@@ -5,11 +5,16 @@ import (
 	"dev-framework-go/models"
 	s "dev-framework-go/pkg/session"
 	"dev-framework-go/pkg/util"
+	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
 )
+
+type BillExtend struct {
+	Resume_order_uuid string `json:"resume_order_uuid,omitempty"`
+}
 
 func RecordHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -35,6 +40,10 @@ func RecordHandler() gin.HandlerFunc {
 			return
 		}
 		for index := 0; index < len(r); index++ {
+			var billExtend BillExtend
+			if r[index].Extend != "" {
+				err = json.Unmarshal([]byte(r[index].Extend), &billExtend)
+			}
 			order_business_status := ""
 			if r[index].Order_status == "pay_success" {
 				if conf.BILL_BUSINESS_STATUS[r[index].Business_status] != "" {
@@ -59,6 +68,12 @@ func RecordHandler() gin.HandlerFunc {
 			for j := 0; j < len(r[index].OrderDetails); j++ {
 				content += fmt.Sprintf("%s%d个,", r[index].OrderDetails[j].Goods_name, r[index].OrderDetails[j].Goods_num)
 			}
+			order_link := ""
+			if r[index].Business_type == "resume_optimize" {
+				order_link = fmt.Sprintf("http://dev-sxs-frontend.mshare.cn/my-orders?order_id=%s", r[index].Uuid)
+			} else {
+				order_link = fmt.Sprintf("http://dev-sxs-frontend.mshare.cn/my-orders?order_id=%s", billExtend.Resume_order_uuid)
+			}
 			tmp := map[string]interface{}{
 				"order_no":              r[index].Uuid,
 				"order_business_status": order_business_status,
@@ -69,7 +84,7 @@ func RecordHandler() gin.HandlerFunc {
 				"transaction_time":      transaction_time,
 				"goods_star":            r[index].GoodsStar,
 				"content":               content,
-				"order_link":            fmt.Sprintf("http://dev-sxs-frontend.mshare.cn/my-orders?order_id=%s", r[index].Uuid),
+				"order_link":            order_link,
 			}
 			res = append(res, tmp)
 		}

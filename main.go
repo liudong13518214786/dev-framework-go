@@ -39,7 +39,7 @@ func main() {
 	signal.Notify(quit, os.Interrupt)
 	<-quit
 	logger.Info("Server Shotdown...")
-	ctx, cancle := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancle := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancle()
 	if err := srv.Shutdown(ctx); err != nil {
 		logger.Fatal("Server Shutdown:", err)
