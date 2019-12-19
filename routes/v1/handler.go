@@ -21,22 +21,14 @@ func RecordHandler() gin.HandlerFunc {
 		page := c.DefaultQuery("p", "1")
 		pageInt, err := strconv.Atoi(page)
 		if err != nil {
-			c.JSON(200, gin.H{
-				"code": 100,
-				"data": nil,
-				"msg":  "参数错误",
-			})
+			util.ReturnError(c, conf.INVALID_PARAMS, conf.GetMessage(conf.INVALID_PARAMS), nil)
 			return
 		}
 		offset := (pageInt - 1) * conf.PERNUM
 		var res []map[string]interface{}
 		r := models.BillRecord(conf.PERNUM, offset, "usr_lock2vidladc")
 		if r == nil {
-			c.JSON(200, gin.H{
-				"code": 100,
-				"data": nil,
-				"msg":  "没有查询到数据",
-			})
+			util.ReturnError(c, conf.SUCCESS, "没有查询到数据", nil)
 			return
 		}
 		for index := 0; index < len(r); index++ {
@@ -88,12 +80,8 @@ func RecordHandler() gin.HandlerFunc {
 			}
 			res = append(res, tmp)
 		}
-		//content := fmt.Sprintf("%s%d个", p.OrderDetail.GoodsName, p.OrderDetail.GoodsNum
-		c.JSON(200, gin.H{
-			"code": 100,
-			"data": res,
-			"msg":  "ok",
-		})
+		util.ReturnError(c, conf.SUCCESS, conf.GetMessage(conf.SUCCESS), res)
+		return
 	}
 }
 

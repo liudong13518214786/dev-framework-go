@@ -5,6 +5,7 @@ import (
 	"dev-framework-go/conf"
 	"encoding/hex"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"github.com/wonderivan/logger"
 	"gopkg.in/gomail.v2"
 	"strings"
@@ -48,4 +49,11 @@ func TransTime(t time.Time) string {
 		return ""
 	}
 	return s
+}
+func ReturnError(c *gin.Context, code int, errMsg string, data interface{}) {
+	c.JSON(200, gin.H{
+		"code": code,
+		"data": data,
+		"msg":  errMsg,
+	})
 }
