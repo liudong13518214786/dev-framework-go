@@ -1,26 +1,14 @@
 package main
 
 import (
-	"fmt"
+	"os"
+	"os/signal"
 )
 
-const tagName = "validate"
-
-type employee struct {
-	ID       int     `json:"id"`
-	Name     string  `json:"名字" validate:"presence,min=2,max=40"`
-	Age      int     `json:"年龄"`
-	Desc     string  `json:"描述" back:"好看否"`
-	weight   float64 `json:"weight" 单位:"kg"`
-	Salary   float64 `json:"-"`
-	Email    string  `validate:"email,required"`
-	MateName string  `json:"mate_name,omitempty"`
-}
-
 func main() {
-	a := fmt.Sprintf("%.2f", 19950/float64(100))
-	println(a)
-	fmt.Println(19950 / float64(100))
+	c := make(chan os.Signal)
+	signal.Notify(c, os.Kill)
+
 	//	zhangsan := employee{
 	//		ID:       1,
 	//		Name:     "张三",

@@ -6,18 +6,10 @@ import (
 	s "dev-framework-go/pkg/session"
 	"dev-framework-go/pkg/util"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
-
-	//"dev-framework-go/pkg/util"
-	"github.com/gin-gonic/gin"
 )
-
-//
-//type LoginParm struct {
-//	Username string `form:"username"`
-//	Password string `form:"password"`
-//}
 
 func RecordHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
