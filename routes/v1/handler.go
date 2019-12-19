@@ -121,3 +121,49 @@ func LogOutHandler() gin.HandlerFunc {
 		})
 	}
 }
+
+func BillDetailHandler() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		orderId := c.Query("order_no")
+		r := models.BillDetail(orderId, "usr_lock2vidladc")
+
+		transaction_time := ""
+		if r.Order_status == "pay_success" && util.TransTime(r.Pay_time) != "" {
+			transaction_time = r.Pay_time.Format("2006/01/02 15:04")
+		}
+		if r.Order_status == "refunding" {
+			transaction_time = r.Pay_time.Format("2006/01/02 15:04")
+		}
+		if r.Order_status == "refund" && util.TransTime(r.Refund_time) != "" {
+			transaction_time = r.Refund_time.Format("2006/01/02 15:04")
+		}
+		content := ""
+		for j := 0; j < len(r.OrderDetails); j++ {
+			content += fmt.Sprintf("%s%d个,", r.OrderDetails[j].Goods_name, r.OrderDetails[j].Goods_num)
+		}
+
+		order_business_status := ""
+		if r.Order_status == "pay_success" {
+			if conf.BILL_BUSINESS_STATUS[r.Business_status] != "" {
+				order_business_status = conf.BILL_BUSINESS_STATUS[r.Business_status]
+			} else {
+				order_business_status = conf.BILL_PAY_STATUS["pay_success"]
+			}
+		} else {
+			order_business_status = conf.BILL_PAY_STATUS[r.Order_status]
+		}
+		util.ReturnError(c, 100, "ok", gin.H{
+			"order_no":              r.Uuid,
+			"order_status":          r.Order_status,
+			"expire_time":           util.TransTime(r.Expire_time),
+			"total_price":           fmt.Sprintf("%.2f", r.Total_price/100),
+			"business_status":       r.Business_status,
+			"order_business_status": order_business_status,
+			"business_type":         conf.GOODS_NAME[r.Business_type],
+			"content":               content,
+			"goods_star":            r.GoodsStar,
+			"transaction_time":      transaction_time,
+		})
+		return
+	}
+}

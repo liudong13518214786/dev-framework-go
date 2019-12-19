@@ -18,6 +18,7 @@ func InitRoute() *gin.Engine {
 	apiv1.Use()
 	{
 		apiv1.GET("/record", v1.RecordHandler())
+		apiv1.GET("/detail", v1.BillDetailHandler())
 	}
 	return r
 }

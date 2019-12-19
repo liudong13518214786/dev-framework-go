@@ -21,9 +21,11 @@ type Record struct {
 }
 
 type OrderDetail struct {
-	Goods_name string
-	Goods_num  int
-	Order_id   string
+	Goods_name  string
+	Goods_num   int
+	Order_id    string
+	Goods_price int
+	Goods_id    string
 }
 
 func BillRecord(limit int, offset int, useruuid string) []Record {
@@ -51,5 +53,20 @@ func BillRecord(limit int, offset int, useruuid string) []Record {
 			}
 		}
 	}
+	return r
+}
+
+func BillDetail(order_no string, useruuid string) Record {
+	var r Record
+	db.DBPool.Table("bill_record AS br").Select("br.uuid, br.user_uuid, br.business_type, br.order_status,"+
+		" br.expire_time, br.extend,br.charge_id, br.business_status,br.total_price,br.pay_time,br.refund_time, "+
+		"oe.goods_star").Joins("left join order_evaluate oe on br.uuid=oe.order_uuid").Where("br.uuid=? "+
+		"and br.user_uuid=?", order_no, useruuid).Find(&r)
+	var d OrderDetail
+	var de []OrderDetail
+	db.DBPool.Table("order_detail").Select("goods_price, goods_id, goods_num, goods_name, "+
+		"build_time").Where("order_id=? and user_uuid=?", order_no, useruuid).Find(&d)
+	de = append(de, d)
+	r.OrderDetails = de
 	return r
 }
