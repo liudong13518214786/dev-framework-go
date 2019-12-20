@@ -23,6 +23,13 @@ func init() {
 	db.InitDatabasePool()
 }
 
+// @title gin 框架
+// @version 1.0
+// @description 给予gin web框架搭建的业务骨架
+// @termsofservice http://swagger.io/terms/
+// @contact.name kennyL
+// @contact.email 846723063@qq.com
+// @host localhost:8890
 func main() {
 	r := routes.InitRoute()
 	logger.Debug("SERVER RUN IN http://127.0.0.1" + conf.PORT)

@@ -1,6 +1,13 @@
+host: localhost:8890
 info:
-  contact: {}
+  contact:
+    email: 846723063@qq.com
+    name: kennyL
+  description: 给予gin web框架搭建的业务骨架
   license: {}
+  termsOfService: http://swagger.io/terms/
+  title: gin 框架
+  version: "1.0"
 paths:
   /api/v1/login:
     get:

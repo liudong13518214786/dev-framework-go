@@ -16,6 +16,10 @@ type BillExtend struct {
 	Resume_order_uuid string `json:"resume_order_uuid,omitempty"`
 }
 
+// @title Docker监控服务
+// @version 1.0
+// @description docker监控服务后端API接口文档
+
 func RecordHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		page := c.DefaultQuery("p", "1")
