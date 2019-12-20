@@ -3,10 +3,10 @@ info:
   contact:
     email: 846723063@qq.com
     name: kennyL
-  description: 给予gin web框架搭建的业务骨架
+  description: 开发接口文档
   license: {}
   termsOfService: http://swagger.io/terms/
-  title: gin 框架
+  title: gin脚手脚
   version: "1.0"
 paths:
   /api/v1/login:

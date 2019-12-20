@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "给予gin web框架搭建的业务骨架",
-        "title": "gin 框架",
+        "description": "开发接口文档",
+        "title": "gin脚手脚",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "kennyL",

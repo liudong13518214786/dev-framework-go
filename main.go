@@ -23,9 +23,9 @@ func init() {
 	db.InitDatabasePool()
 }
 
-// @title gin 框架
+// @title gin脚手脚
 // @version 1.0
-// @description 给予gin web框架搭建的业务骨架
+// @description 开发接口文档
 // @termsofservice http://swagger.io/terms/
 // @contact.name kennyL
 // @contact.email 846723063@qq.com
@@ -33,7 +33,9 @@ func init() {
 func main() {
 	r := routes.InitRoute()
 	logger.Debug("SERVER RUN IN http://127.0.0.1" + conf.PORT)
-	logger.Debug("SWAGGER RUN IN http://127.0.0.1" + conf.PORT + "/swagger/index.html")
+	if conf.OPEN_SWAGGER == true {
+		logger.Debug("SWAGGER RUN IN http://127.0.0.1" + conf.PORT + "/swagger/index.html")
+	}
 	srv := http.Server{
 		Addr:    conf.PORT,
 		Handler: r,

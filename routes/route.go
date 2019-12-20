@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"dev-framework-go/conf"
 	_ "dev-framework-go/docs"
 	diyerror "dev-framework-go/middleware/error"
 	"dev-framework-go/middleware/log"
@@ -24,6 +25,8 @@ func InitRoute() *gin.Engine {
 		apiv1.GET("/record", v1.RecordHandler())
 		apiv1.GET("/detail", v1.BillDetailHandler())
 	}
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	if conf.OPEN_SWAGGER == true {
+		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	}
 	return r
 }
