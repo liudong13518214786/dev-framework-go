@@ -85,6 +85,14 @@ func RecordHandler() gin.HandlerFunc {
 	}
 }
 
+// @Summary 用户登录
+// @Description 通过用户的账号和密码登录
+// @Accept  json
+// @Produce  json
+// @Param   username     query    string     true        "用户名"
+// @Param   password     query    string     true        "密码"
+// @Success 200 {string} string   {"code": 100, "msg": "success", "data":nil}
+// @Router /api/v1/login [get]
 func LoginHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		username := c.Query("username")
@@ -105,7 +113,7 @@ func LoginHandler() gin.HandlerFunc {
 		//Useruuid = s.SessionGet(c, "useruuid")
 		c.JSON(http.StatusOK, gin.H{
 			"code": conf.SUCCESS,
-			"msg":  username,
+			"msg":  "登录成功",
 			"data": nil,
 		})
 	}

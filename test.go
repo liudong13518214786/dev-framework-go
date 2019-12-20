@@ -1,13 +1,27 @@
 package main
 
 import (
-	"os"
-	"os/signal"
+	"fmt"
+	"sync"
 )
 
+type Instance struct {
+	name string
+}
+
+func (i Instance) print() {
+	fmt.Println(i.name)
+}
+
+var instance Instance
+
+func makeInstance() {
+	instance = Instance{"go"}
+}
 func main() {
-	c := make(chan os.Signal)
-	signal.Notify(c, os.Kill)
+	var once sync.Once
+	once.Do(makeInstance)
+	instance.print()
 
 	//	zhangsan := employee{
 	//		ID:       1,

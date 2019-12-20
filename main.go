@@ -26,6 +26,7 @@ func init() {
 func main() {
 	r := routes.InitRoute()
 	logger.Debug("SERVER RUN IN http://127.0.0.1" + conf.PORT)
+	logger.Debug("SWAGGER RUN IN http://127.0.0.1" + conf.PORT + "/swagger/index.html")
 	srv := http.Server{
 		Addr:    conf.PORT,
 		Handler: r,
