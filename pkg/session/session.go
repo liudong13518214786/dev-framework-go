@@ -16,10 +16,10 @@ type Session interface {
 
 //session管理器
 type SessionManager interface {
-	SessionInit(sid string) (Session, error)
-	SessionRead(sid string) (Session, error)
-	SessionDestroy(sid string) error
-	SessionGC(maxLifeTime int64)
+	SessionInit(sid string) (Session, error) //session初始化
+	SessionRead(sid string) (Session, error) //session读取（如果读取不到，则创建一个新的）
+	SessionDestroy(sid string) error         // session的销毁（这个是用户主动销毁）
+	SessionGC(maxLifeTime int64)             //session的回收（根据超时时间来回收）
 }
 
 func SessionGet(c *gin.Context, key string) string {
