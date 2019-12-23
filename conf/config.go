@@ -15,7 +15,7 @@ const (
 	SESSION_NAME            = "SXS-TEST"
 	COOKIE_SECRET           = "dfafafa"
 	DOMAIN                  = "localhost"
-	COOKIE_EXPIRE_TIME      = 600
+	COOKIE_EXPIRE_TIME      = 60
 	PORT                    = ":8890"
 	APP_ENV                 = "release"
 	TIME_FORMAT             = "2006-01-02 15:04:05"

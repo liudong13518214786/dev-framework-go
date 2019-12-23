@@ -106,14 +106,15 @@ func LoginHandler() gin.HandlerFunc {
 			})
 			return
 		}
+		sess.Options(session.Options{
+			Path:     "/",
+			Domain:   conf.DOMAIN,
+			MaxAge:   conf.COOKIE_EXPIRE_TIME,
+			Secure:   false,
+			HttpOnly: true,
+		})
 		sess.Set("useruuid", username)
 		_ = sess.Save()
-		//Useruuid := s.SessionGet(c, "useruuid")
-		//if Useruuid == "" {
-		//s.SessionSet(c, "useruuid", username, conf.COOKIE_EXPIRE_TIME)
-		//}
-		////todo 一边设置session一边取session,第一次会取不到
-		//Useruuid = s.SessionGet(c, "useruuid")
 		c.JSON(http.StatusOK, gin.H{
 			"code": conf.SUCCESS,
 			"msg":  "登录成功",
