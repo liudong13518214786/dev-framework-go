@@ -2,6 +2,7 @@ package v1
 
 import (
 	"dev-framework-go/conf"
+	"dev-framework-go/middleware/session"
 	"dev-framework-go/models"
 	s "dev-framework-go/pkg/session"
 	"dev-framework-go/pkg/util"
@@ -97,6 +98,7 @@ func LoginHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		username := c.Query("username")
 		password := c.Query("password")
+		sess := session.Default(c)
 		if username == "" || password == "" {
 			c.JSON(http.StatusOK, gin.H{
 				"code": conf.MISS_PARAMS,
@@ -105,9 +107,13 @@ func LoginHandler() gin.HandlerFunc {
 			})
 			return
 		}
+		sess.Set("useruuid", username)
+		err := sess.Save()
+		fmt.Println(err)
+		fmt.Println(sess.Get("useruuid"))
 		//Useruuid := s.SessionGet(c, "useruuid")
 		//if Useruuid == "" {
-		s.SessionSet(c, "useruuid", username, conf.COOKIE_EXPIRE_TIME)
+		//s.SessionSet(c, "useruuid", username, conf.COOKIE_EXPIRE_TIME)
 		//}
 		////todo 一边设置session一边取session,第一次会取不到
 		//Useruuid = s.SessionGet(c, "useruuid")

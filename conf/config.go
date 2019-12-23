@@ -34,6 +34,7 @@ const (
 	SYSTEMEMAILPASS         = "LD@qq.com"
 	PERNUM                  = 10 //每页显示条数
 	OPEN_SWAGGER            = true
+	GLOBAL_SESSION          = "global_session"
 )
 
 func InitAppEnv(env string) {
