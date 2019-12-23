@@ -108,9 +108,7 @@ func LoginHandler() gin.HandlerFunc {
 			return
 		}
 		sess.Set("useruuid", username)
-		err := sess.Save()
-		fmt.Println(err)
-		fmt.Println(sess.Get("useruuid"))
+		_ = sess.Save()
 		//Useruuid := s.SessionGet(c, "useruuid")
 		//if Useruuid == "" {
 		//s.SessionSet(c, "useruuid", username, conf.COOKIE_EXPIRE_TIME)
