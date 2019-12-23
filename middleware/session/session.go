@@ -24,11 +24,6 @@ func SessionV1() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		sess := Default(c)
 		userUuid := sess.Get("useruuid")
-		//userUuid := s.SessionGet(c, "useruuid")
-		//cookieManger := util.CookieManger{c, conf.SESSION_NAME, conf.COOKIE_EXPIRE_TIME}
-		//cookieId := cookieManger.GetSessionid()
-		//sessionManage := util.SessionManager{cookieId}
-		//userUuid := session.Get("useruuid")
 		code := conf.SUCCESS
 		if userUuid == nil {
 			code = conf.NOT_LOGIN
@@ -45,7 +40,7 @@ func SessionV1() gin.HandlerFunc {
 	}
 }
 
-func SessionV2(name string) gin.HandlerFunc {
+func SessionInit(name string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		store, _ := redistore.NewRediStore(10, conf.REDIS_NETWORK, conf.REDIS_ADDRESS, conf.REDIS_PASS, []byte(conf.COOKIE_SECRET))
 		session := &session{name, c.Request, store, nil, false, c.Writer}
