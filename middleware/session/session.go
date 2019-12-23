@@ -2,7 +2,6 @@ package session
 
 import (
 	"dev-framework-go/conf"
-	s "dev-framework-go/pkg/session"
 	"github.com/boj/redistore"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/context"
@@ -23,13 +22,15 @@ type session struct {
 //验证登录中间件
 func SessionV1() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		userUuid := s.SessionGet(c, "useruuid")
+		sess := Default(c)
+		userUuid := sess.Get("useruuid")
+		//userUuid := s.SessionGet(c, "useruuid")
 		//cookieManger := util.CookieManger{c, conf.SESSION_NAME, conf.COOKIE_EXPIRE_TIME}
 		//cookieId := cookieManger.GetSessionid()
 		//sessionManage := util.SessionManager{cookieId}
 		//userUuid := session.Get("useruuid")
 		code := conf.SUCCESS
-		if userUuid == "" {
+		if userUuid == nil {
 			code = conf.NOT_LOGIN
 		}
 		if code != conf.SUCCESS {
@@ -93,6 +94,7 @@ func (s *session) Set(key, value interface{}) {
 
 func (s *session) Delete(key interface{}) {
 	delete(s.Session().Values, key)
+	s.written = true
 }
 
 func (s *session) Clear() {

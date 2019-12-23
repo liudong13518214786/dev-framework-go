@@ -22,8 +22,7 @@ func InitRoute() *gin.Engine {
 	r.GET("/api/v1/logout", v1.LogOutHandler())
 	apiv1 := r.Group("/api/v1")
 
-	//apiv1.Use(session.Session())
-	apiv1.Use()
+	apiv1.Use(session.SessionV1())
 	{
 		apiv1.GET("/record", v1.RecordHandler())
 		apiv1.GET("/detail", v1.BillDetailHandler())

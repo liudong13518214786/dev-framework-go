@@ -1,10 +1,7 @@
 package main
 
 import (
-	"dev-framework-go/conf"
 	"fmt"
-	"github.com/boj/redistore"
-	"github.com/gorilla/sessions"
 	"sync"
 )
 
@@ -25,8 +22,11 @@ func main() {
 	var once sync.Once
 	once.Do(makeInstance)
 	instance.print()
-	//s:=sessions.NewSession(store, conf.SESSION_NAME)
-	sessions.NewSession()
+	s := map[string]string{
+		"123": "123",
+	}
+	delete(s, "123")
+	fmt.Println(s)
 	//	zhangsan := employee{
 	//		ID:       1,
 	//		Name:     "张三",

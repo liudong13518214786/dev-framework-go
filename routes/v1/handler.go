@@ -4,7 +4,6 @@ import (
 	"dev-framework-go/conf"
 	"dev-framework-go/middleware/session"
 	"dev-framework-go/models"
-	s "dev-framework-go/pkg/session"
 	"dev-framework-go/pkg/util"
 	"encoding/json"
 	"fmt"
@@ -125,7 +124,9 @@ func LoginHandler() gin.HandlerFunc {
 
 func LogOutHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		s.SessionDel(c)
+		s := session.Default(c)
+		s.Clear()
+		_ = s.Save()
 		c.JSON(http.StatusOK, gin.H{
 			"code": conf.SUCCESS,
 			"msg":  conf.GetMessage(conf.SUCCESS),
