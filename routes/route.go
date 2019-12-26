@@ -25,6 +25,7 @@ func InitRoute() *gin.Engine {
 	{
 		apiv1.GET("/record", v1.RecordHandler())
 		apiv1.GET("/detail", v1.BillDetailHandler())
+		apiv1.GET("/info", v1.UserInfoHandler())
 	}
 	if conf.OPEN_SWAGGER == true {
 		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

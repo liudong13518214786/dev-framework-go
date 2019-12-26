@@ -1,6 +1,10 @@
 package conf
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"os"
+)
 
 const (
 	APPNAME                 = "开发框架测试"
@@ -13,31 +17,37 @@ const (
 	REDIS_IDLETIMEOUT       = 10
 	REDIS_WAIT         bool = true
 	SESSION_NAME            = "SXS-TEST"
-	COOKIE_SECRET           = "dfafafa"
+	COOKIE_SECRET           = "PxzKZsak1JFBMg7of0tOCUrG9QYRiv3X"
 	DOMAIN                  = "localhost"
 	COOKIE_EXPIRE_TIME      = 60
 	PORT                    = ":8890"
-	APP_ENV                 = "release"
 	TIME_FORMAT             = "2006-01-02 15:04:05"
-	DB_HOST                 = "dbi.mshare.cn"
-	DB_PORT                 = 1094
-	DB_USER                 = "dbuser"
-	DB_PASS                 = "dY8*6fN6Z#xSOg$wG9zDATTe"
-	DB_NAME                 = "mx_bill"
-	DB_MaxOpenConns         = 100
-	DB_MaxIdleConns         = 10 //空闲时的最大连接数
-	ERRORNOTIFYOPEN    bool = false
-	SYSTEMEMAILUSER         = "liudong@mshare.cn"
-	EMAILTOUSER             = "846723063@qq.com" //多个用户逗号隔开
-	SYSTEMEMAILHOST         = "smtp.mxhichina.com"
-	SYSTEMEMAILPORT         = 25
-	SYSTEMEMAILPASS         = "LD@qq.com"
-	PERNUM                  = 10 //每页显示条数
-	OPEN_SWAGGER            = true
-	GLOBAL_SESSION          = "global_session"
+	//DB_HOST                 = "dbi.mshare.cn"
+	DB_HOST = "db"
+	//DB_PORT                 = 1094
+	DB_PORT = 5432
+	//DB_USER                 = "dbuser"
+	DB_USER = "postgres"
+	//DB_PASS                 = "dY8*6fN6Z#xSOg$wG9zDATTe"
+	DB_PASS = "123456"
+	//DB_NAME                 = "mx_bill"
+	DB_NAME              = "users"
+	DB_MaxOpenConns      = 100
+	DB_MaxIdleConns      = 10 //空闲时的最大连接数
+	ERRORNOTIFYOPEN bool = false
+	SYSTEMEMAILUSER      = "liudong@mshare.cn"
+	EMAILTOUSER          = "846723063@qq.com" //多个用户逗号隔开
+	SYSTEMEMAILHOST      = "smtp.mxhichina.com"
+	SYSTEMEMAILPORT      = 25
+	SYSTEMEMAILPASS      = "LD@qq.com"
+	PERNUM               = 10 //每页显示条数
+	OPEN_SWAGGER         = true
+	GLOBAL_SESSION       = "global_session"
 )
 
-func InitAppEnv(env string) {
+func InitAppEnv() {
+	env := os.Getenv("APP_ENV")
+	fmt.Printf("this is %s\n", env)
 	switch env {
 	case "debug":
 		gin.SetMode(gin.DebugMode)

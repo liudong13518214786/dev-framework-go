@@ -1,14 +1,31 @@
 version: '3'
 
+volumes:
+  database_data:
+    driver: local
+
 services:
-   web: # 容器名字
+  web: # 容器名字
 #     image: liudongkenny/rpc:v3
-     build: .
-     command: go run main.go
-     ports:
-        - "8890:8890" # 将内部的 8890 映射到外部的 6000
-#     volumes:
-#        - ./go/src/dev-framework-go # 将同文件夹下的 data 目录 “挂载” 到内部 Ghost 数据目录
-#     environment:
-#        - url=http://articles.leetcode-cn.com # 设置一个对外时使用的 URL，如果不设置的话博客后台链接地址会错误
-#     restart: always # 如果容器内应用退出了，尝试重启
+    build: .
+    command: go run main.go
+    environment:
+      - APP_ENV=release
+    ports:
+      - "8890:8890" # 将内部的 8890 映射到外部的 6000
+    depends_on:
+      - db
+      - redis
+  db:
+    image: postgres:9.4
+    volumes:
+      - database_data:/var/lib/postgresql/data/
+    ports:
+      - "3432:5432"
+    restart: always
+
+  redis:
+    image: redis:rc-alpine3.11
+    ports:
+      - "6379:6379"
+    restart: always

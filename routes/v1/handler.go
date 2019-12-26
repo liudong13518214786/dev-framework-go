@@ -181,3 +181,15 @@ func BillDetailHandler() gin.HandlerFunc {
 		return
 	}
 }
+
+func UserInfoHandler() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		tel := c.Query("tel")
+		res := models.GetUserInfoByTel(tel)
+		c.JSON(http.StatusOK, gin.H{
+			"code": conf.SUCCESS,
+			"msg":  "查询成功",
+			"data": res,
+		})
+	}
+}
