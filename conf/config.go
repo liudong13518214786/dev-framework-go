@@ -10,8 +10,8 @@ const (
 	APPNAME                 = "开发框架测试"
 	JWTTOKEN                = "123123"
 	REDIS_NETWORK           = "tcp"
-	REDIS_ADDRESS           = "dbi.mshare.cn:1200"
-	REDIS_PASS              = "255ZDVsni98AB4KBHd76pyAh"
+	REDIS_ADDRESS           = "redis:6379"
+	REDIS_PASS              = "123456"
 	REDIS_MAXIDLE           = 10
 	REDIS_MAXACTIVE         = 10
 	REDIS_IDLETIMEOUT       = 10

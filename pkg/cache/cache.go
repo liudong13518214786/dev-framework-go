@@ -21,7 +21,7 @@ func InitRedisPool() {
 		Dial: func() (conn redis.Conn, e error) {
 			c, err := redis.Dial(conf.REDIS_NETWORK, conf.REDIS_ADDRESS)
 			if err != nil {
-				logger.Error("[INIT REDIS POOL ERROR]")
+				logger.Error("[INIT REDIS POOL ERROR]", err)
 				return nil, err
 			}
 			_, err = c.Do("AUTH", conf.REDIS_PASS)

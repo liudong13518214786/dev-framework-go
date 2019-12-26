@@ -11,6 +11,8 @@ services:
     command: go run main.go
     environment:
       - APP_ENV=release
+#    volumes:
+#      -
     ports:
       - "8890:8890" # 将内部的 8890 映射到外部的 6000
     depends_on:
@@ -26,6 +28,7 @@ services:
 
   redis:
     image: redis:rc-alpine3.11
+    command: redis-server --requirepass 123456
     ports:
       - "6379:6379"
     restart: always
