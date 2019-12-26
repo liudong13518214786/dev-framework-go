@@ -43,6 +43,7 @@ const (
 	PERNUM               = 10 //每页显示条数
 	OPEN_SWAGGER         = true
 	GLOBAL_SESSION       = "global_session"
+	PG_SQL_PRINT         = false
 )
 
 func InitAppEnv() {

@@ -76,13 +76,13 @@ func SetKey(key string, value interface{}, expire_time int64) bool {
 	return true
 }
 
-func GetKey(key string) string {
+func GetKey(key string) interface{} {
 	conn := pool.Get()
 	defer conn.Close()
 	res, err := redis.String(conn.Do("GET", key))
 	if err != nil {
 		logger.Error("[GET KEY ERROR]key=%s", key)
-		return ""
+		return nil
 	}
 	return res
 }
