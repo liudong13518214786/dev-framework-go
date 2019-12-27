@@ -33,7 +33,7 @@ func init() {
 func main() {
 	r := routes.InitRoute()
 	logger.Debug("SERVER RUN IN http://127.0.0.1" + conf.PORT)
-	if conf.OPEN_SWAGGER == true {
+	if os.Getenv("APP_ENV") != "release" {
 		logger.Debug("SWAGGER RUN IN http://127.0.0.1" + conf.PORT + "/swagger/index.html")
 	}
 	srv := http.Server{

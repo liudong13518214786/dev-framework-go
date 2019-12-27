@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/wonderivan/logger"
+	"os"
 	"strings"
 	"sync"
 )
@@ -20,7 +21,8 @@ type CookieManger struct {
 
 func (s *CookieManger) SetSecureCookie(sessionId string) {
 	secureCookie := createSignedValue(s.SessionName, sessionId)
-	s.C.SetCookie(s.SessionName, secureCookie, s.ExpireTime, "/", conf.DOMAIN, false, true)
+	domain := os.Getenv("DOMAIN")
+	s.C.SetCookie(s.SessionName, secureCookie, s.ExpireTime, "/", domain, false, true)
 }
 
 func (s *CookieManger) GetSessionid() string {

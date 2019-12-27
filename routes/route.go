@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
+	"os"
 )
 
 func InitRoute() *gin.Engine {
@@ -27,7 +28,7 @@ func InitRoute() *gin.Engine {
 		apiv1.GET("/detail", v1.BillDetailHandler())
 		apiv1.GET("/info", v1.UserInfoHandler())
 	}
-	if conf.OPEN_SWAGGER == true {
+	if os.Getenv("APP_ENV") != "release" {
 		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}
 	return r

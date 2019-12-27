@@ -18,7 +18,6 @@ const (
 	REDIS_WAIT         bool = true
 	SESSION_NAME            = "SXS-TEST"
 	COOKIE_SECRET           = "PxzKZsak1JFBMg7of0tOCUrG9QYRiv3X"
-	DOMAIN                  = "localhost"
 	COOKIE_EXPIRE_TIME      = 60
 	PORT                    = ":8890"
 	TIME_FORMAT             = "2006-01-02 15:04:05"
@@ -41,7 +40,6 @@ const (
 	SYSTEMEMAILPORT      = 25
 	SYSTEMEMAILPASS      = "LD@qq.com"
 	PERNUM               = 10 //每页显示条数
-	OPEN_SWAGGER         = true
 	GLOBAL_SESSION       = "global_session"
 	PG_SQL_PRINT         = false
 )

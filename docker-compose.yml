@@ -5,12 +5,28 @@ volumes:
     driver: local
 
 services:
-  web: # 容器名字
+  webtest: # 容器名字
+    #     image: liudongkenny/rpc:v3
+    build: .
+    command: go run main.go
+    environment:
+      - APP_ENV=debug
+      - DOMAIN=localhost
+    volumes:
+      - .:/go/src/dev-framework-go/
+    ports:
+      - "8890:8890" # 将内部的 8890 映射到外部的 6000
+    depends_on:
+      - db
+      - redis
+
+  webrelease: # 容器名字
 #     image: liudongkenny/rpc:v3
     build: .
     command: go run main.go
     environment:
       - APP_ENV=release
+      - DOMAIN=47.93.19.60
     volumes:
       - .:/go/src/dev-framework-go/
     ports:
