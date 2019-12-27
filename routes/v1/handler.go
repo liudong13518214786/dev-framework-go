@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"os"
 	"strconv"
 )
 
@@ -108,7 +109,7 @@ func LoginHandler() gin.HandlerFunc {
 		}
 		sess.Options(session.Options{
 			Path:     "/",
-			Domain:   conf.DOMAIN,
+			Domain:   os.Getenv("DOMAIN"),
 			MaxAge:   conf.COOKIE_EXPIRE_TIME,
 			Secure:   false,
 			HttpOnly: true,
