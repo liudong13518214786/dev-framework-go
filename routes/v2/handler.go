@@ -5,6 +5,7 @@ import (
 	"dev-framework-go/models"
 	"dev-framework-go/pkg/util"
 	"encoding/json"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -76,5 +77,35 @@ func GetBlogListHandler() gin.HandlerFunc {
 			"msg":  "success",
 			"data": result,
 		})
+	}
+}
+
+func DetailHandler() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		uuid := c.Query("uuid")
+		if uuid == "" {
+			util.ReturnError(c, 500, "缺少参数", nil)
+			return
+		}
+		res := models.DetailBlog(uuid)
+		fmt.Println(res)
+		if &res == nil {
+			util.ReturnError(c, 500, "参数错误", nil)
+			return
+		}
+
+		result := map[string]interface{}{
+			"uuid":       res.Uuid,
+			"title":      res.Title,
+			"build_time": util.TransTime(res.Build_time),
+			"read_num":   res.ReadNum,
+			"info":       res.Info,
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"code": 100,
+			"msg":  "success",
+			"data": result,
+		})
+		models.UpdateNum(uuid)
 	}
 }

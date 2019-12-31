@@ -28,11 +28,11 @@ func InitRoute() *gin.Engine {
 	r.POST("/api/v1/upload", v2.UploadHandler())
 	r.POST("/api/v1/write", v2.WriteBlogHandler())
 	r.GET("/api/v1/blog", v2.GetBlogListHandler())
+	r.GET("/api/v1/detail", v2.DetailHandler())
 	apiv1 := r.Group("/api/v1")
 	apiv1.Use(session.SessionV1())
 	{
 		apiv1.GET("/write", v1.RecordHandler())
-		apiv1.GET("/detail", v1.BillDetailHandler())
 		apiv1.GET("/info", v1.UserInfoHandler())
 	}
 	if os.Getenv("APP_ENV") != "release" {

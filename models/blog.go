@@ -41,3 +41,15 @@ func GetBlog(limit, offset int) []Blog {
 	db.DBPool.Table("blogs").Limit(limit).Offset(offset).Find(&res)
 	return res
 }
+
+func DetailBlog(uuid string) Blog {
+	var res Blog
+	db.DBPool.Table("blogs").Where("uuid=?", uuid).Find(&res)
+	return res
+}
+
+func UpdateNum(uuid string) {
+	var res Blog
+	db1 := db.DBPool.Table("blogs").Where("uuid=?", uuid).First(&res)
+	db1.Model(&res).Update("read_num", res.ReadNum+1)
+}
