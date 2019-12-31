@@ -5,6 +5,7 @@ import (
 	"dev-framework-go/pkg/util"
 	"encoding/json"
 	"strings"
+	"time"
 )
 
 type Blog struct {
@@ -14,12 +15,12 @@ type Blog struct {
 	Img_url    string
 	Info       string
 	Tag        string
-	Build_time string
+	Build_time time.Time
 	ReadNum    int
 }
 
 func WriteBlog(title, img_url, info, tag string) {
-	nowTime := util.GetNowTime()
+	//nowTime:=util.GetNowTime()
 	bid := util.GenerateRandomString("bid", 8)
 	tagList := strings.Split(tag, ";")
 	tagStr, _ := json.Marshal(tagList)
@@ -30,7 +31,7 @@ func WriteBlog(title, img_url, info, tag string) {
 		Img_url:    img_url,
 		Info:       info,
 		Tag:        string(tagStr),
-		Build_time: nowTime,
+		Build_time: time.Now(),
 	}
 	db.DBPool.Create(&b)
 }

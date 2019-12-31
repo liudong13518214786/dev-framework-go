@@ -12,6 +12,7 @@ services:
     environment:
       - APP_ENV=debug
       - DOMAIN=localhost
+      - TZ=Asia/Shanghai
     volumes:
       - .:/go/src/dev-framework-go/
     ports:
@@ -27,6 +28,7 @@ services:
     environment:
       - APP_ENV=release
       - DOMAIN=47.93.19.60
+      - TZ=Asia/Shanghai
     volumes:
       - .:/go/src/dev-framework-go/
     ports:

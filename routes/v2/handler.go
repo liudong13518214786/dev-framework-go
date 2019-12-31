@@ -4,6 +4,7 @@ import (
 	"dev-framework-go/conf"
 	"dev-framework-go/models"
 	"dev-framework-go/pkg/util"
+	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -55,10 +56,25 @@ func GetBlogListHandler() gin.HandlerFunc {
 		}
 		offset := (pageInt - 1) * conf.PERNUM
 		res := models.GetBlog(conf.PERNUM, offset)
+		var result []map[string]interface{}
+		for i := 0; i < len(res); i++ {
+			var tagList []string
+			_ = json.Unmarshal([]byte(res[i].Tag), &tagList)
+			tmp := map[string]interface{}{
+				"title":      res[i].Title,
+				"uuid":       res[i].Uuid,
+				"img":        res[i].Img_url,
+				"info":       res[i].Info,
+				"tag":        tagList,
+				"build_time": util.TransTime(res[i].Build_time),
+				"readnum":    res[i].ReadNum,
+			}
+			result = append(result, tmp)
+		}
 		c.JSON(http.StatusOK, gin.H{
 			"code": 100,
 			"msg":  "success",
-			"data": res,
+			"data": result,
 		})
 	}
 }
