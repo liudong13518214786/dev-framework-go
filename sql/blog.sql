@@ -1,4 +1,4 @@
-CREATE TABLE blog
+CREATE TABLE blogs
 (
   id SERIAL primary key ,
   uuid VARCHAR(64) UNIQUE,

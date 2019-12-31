@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 )
 
@@ -23,14 +24,7 @@ func main() {
 	//tp2 := calc("D", x, y)
 	//defer calc("C", x, tp2)
 	//y = 4
-	var b Users
-	b = Users{"123"}
-	fmt.Println(b)
-	xx(b)
-}
-
-func xx(x interface{}) {
-	a, e := x.(Users)
-	fmt.Println(e)
-	fmt.Println(a)
+	a := []string{"ads", "bb"}
+	res, _ := json.Marshal(a)
+	fmt.Println(string(res))
 }

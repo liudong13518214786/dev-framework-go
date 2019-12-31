@@ -39,9 +39,9 @@ const (
 	SYSTEMEMAILHOST      = "smtp.mxhichina.com"
 	SYSTEMEMAILPORT      = 25
 	SYSTEMEMAILPASS      = "LD@qq.com"
-	PERNUM               = 10 //每页显示条数
+	PERNUM               = 5 //每页显示条数
 	GLOBAL_SESSION       = "global_session"
-	PG_SQL_PRINT         = false
+	PG_SQL_PRINT         = true
 	UploadDst            = "/go/src/dev-framework-go/static/img/"
 	PicUrlHost           = "http://127.0.0.1:8890/static/img/"
 )
