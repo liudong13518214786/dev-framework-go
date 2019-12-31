@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/wonderivan/logger"
 	"gopkg.in/gomail.v2"
+	"math/rand"
 	"strings"
 	"time"
 )
@@ -56,4 +57,14 @@ func ReturnError(c *gin.Context, code int, errMsg string, data interface{}) {
 		"data": data,
 		"msg":  errMsg,
 	})
+}
+
+func GenerateRandomString(suff string, l int) string {
+	bytes := "0123456789abcdefghijklmnopqrstuvwxyz"
+	result := []byte{}
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for i := 0; i < l; i++ {
+		result = append(result, bytes[r.Intn(len(bytes))])
+	}
+	return fmt.Sprintf("%s_%s", suff, string(result))
 }
