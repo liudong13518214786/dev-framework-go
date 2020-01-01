@@ -4,6 +4,7 @@ import (
 	"dev-framework-go/pkg/db"
 	"dev-framework-go/pkg/util"
 	"encoding/json"
+	"fmt"
 	"strings"
 	"time"
 )
@@ -51,12 +52,20 @@ func WriteBlog(title, img_url, info, tag string) {
 	db.DBPool.Create(&b)
 }
 
-func GetBlog(limit, offset int, keyword string) []Blog {
+func GetBlog(limit, offset int, keyword, stype string) []Blog {
 	var res []Blog
 	db1 := db.DBPool.Table("blogs").Order("build_time DESC").Limit(limit).Offset(offset)
 	if keyword != "" {
-		s := "%" + keyword + "%"
-		db1 = db1.Where("info LIKE ?", s)
+		if stype == "info" {
+			s := "%" + keyword + "%"
+			db1 = db1.Where("info LIKE ?", s)
+		} else if stype == "tag" {
+			y := fmt.Sprintf("tag ? '%s'", keyword)
+			db1 = db1.Where(y)
+		} else {
+			db1 = db1.Where("to_char(build_time, 'YYYY-MM-DD')=?", keyword)
+		}
+
 	}
 	db1.Find(&res)
 	return res

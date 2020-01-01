@@ -50,13 +50,14 @@ func GetBlogListHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		page := c.DefaultQuery("p", "1")
 		keyword := c.DefaultQuery("kw", "")
+		stype := c.DefaultQuery("stype", "info")
 		pageInt, err := strconv.Atoi(page)
 		if err != nil {
 			util.ReturnError(c, conf.INVALID_PARAMS, conf.GetMessage(conf.INVALID_PARAMS), nil)
 			return
 		}
 		offset := (pageInt - 1) * conf.PERNUM
-		res := models.GetBlog(conf.PERNUM, offset, keyword)
+		res := models.GetBlog(conf.PERNUM, offset, keyword, stype)
 		countNum := models.GetTotalNum(keyword)
 		var result []map[string]interface{}
 		for i := 0; i < len(res); i++ {

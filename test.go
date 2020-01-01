@@ -15,6 +15,9 @@ type Users struct {
 }
 
 func main() {
+	keyword := "你好"
+	y := fmt.Sprintf("tag ? %s", keyword)
+	fmt.Println(y)
 }
 func RepeatArr(tar []string) []string {
 	result := make([]string, 0, len(tar))
