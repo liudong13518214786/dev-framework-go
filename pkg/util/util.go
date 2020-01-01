@@ -68,3 +68,15 @@ func GenerateRandomString(suff string, l int) string {
 	}
 	return fmt.Sprintf("%s_%s", suff, string(result))
 }
+
+func RepeatArr(tar []string) []string {
+	result := make([]string, 0, len(tar))
+	tmp := map[string]struct{}{}
+	for _, item := range tar {
+		if _, ok := tmp[item]; !ok {
+			tmp[item] = struct{}{}
+			result = append(result, item)
+		}
+	}
+	return result
+}

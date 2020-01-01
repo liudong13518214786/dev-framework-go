@@ -72,8 +72,6 @@ func InsertSql(table string, insert_item map[string]interface{}) string {
 		insertValue += fmt.Sprintf("'%v',", v)
 	}
 	insertKey = fmt.Sprintf("(%s)", insertKey[:len(insertKey)-1])
-	fmt.Println(insertKey)
-	fmt.Println(insertValue)
 	sqlstring := fmt.Sprintf("INSERT INTO %s%s VALUES(%s)", table, insertKey, insertValue[:len(insertValue)-1])
 	return sqlstring
 }

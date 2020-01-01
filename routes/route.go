@@ -29,6 +29,7 @@ func InitRoute() *gin.Engine {
 	r.POST("/api/v1/write", v2.WriteBlogHandler())
 	r.GET("/api/v1/blog", v2.GetBlogListHandler())
 	r.GET("/api/v1/detail", v2.DetailHandler())
+	r.GET("/api/v1/cate", v2.GetClassHandler())
 	apiv1 := r.Group("/api/v1")
 	apiv1.Use(session.SessionV1())
 	{

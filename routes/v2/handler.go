@@ -5,7 +5,6 @@ import (
 	"dev-framework-go/models"
 	"dev-framework-go/pkg/util"
 	"encoding/json"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -88,7 +87,6 @@ func DetailHandler() gin.HandlerFunc {
 			return
 		}
 		res := models.DetailBlog(uuid)
-		fmt.Println(res)
 		if &res == nil {
 			util.ReturnError(c, 500, "参数错误", nil)
 			return
@@ -101,11 +99,30 @@ func DetailHandler() gin.HandlerFunc {
 			"read_num":   res.ReadNum,
 			"info":       res.Info,
 		}
+
 		c.JSON(http.StatusOK, gin.H{
 			"code": 100,
 			"msg":  "success",
 			"data": result,
 		})
 		models.UpdateNum(uuid)
+	}
+}
+
+func GetClassHandler() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		tag := models.GetBlogTag()
+		cate := models.GetCateByTime()
+		hot := models.GetBlogByReadNum()
+		res := map[string]interface{}{
+			"tag":  tag,
+			"cate": cate,
+			"hot":  hot,
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"code": 100,
+			"msg":  "success",
+			"data": res,
+		})
 	}
 }
