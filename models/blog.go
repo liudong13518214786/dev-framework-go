@@ -4,7 +4,6 @@ import (
 	"dev-framework-go/pkg/db"
 	"dev-framework-go/pkg/util"
 	"encoding/json"
-	"fmt"
 	"strings"
 	"time"
 )
@@ -52,10 +51,25 @@ func WriteBlog(title, img_url, info, tag string) {
 	db.DBPool.Create(&b)
 }
 
-func GetBlog(limit, offset int) []Blog {
+func GetBlog(limit, offset int, keyword string) []Blog {
 	var res []Blog
-	db.DBPool.Table("blogs").Limit(limit).Offset(offset).Find(&res)
+	db1 := db.DBPool.Table("blogs").Order("build_time DESC").Limit(limit).Offset(offset)
+	if keyword != "" {
+		s := "%" + keyword + "%"
+		db1 = db1.Where("info LIKE ?", s)
+	}
+	db1.Find(&res)
 	return res
+}
+
+func GetTotalNum(keyword string) int {
+	var count int
+	db1 := db.DBPool.Table("blogs")
+	if keyword != "" {
+		db1 = db1.Where("info like ?", "%"+keyword+"%")
+	}
+	db1.Count(&count)
+	return count
 }
 
 func DetailBlog(uuid string) Blog {
@@ -73,7 +87,6 @@ func UpdateNum(uuid string) {
 func GetBlogTag() []string {
 	var res TagList
 	db.DBPool.Table("blogs").Select("json_agg(tag) as Tag").Find(&res)
-	fmt.Println(res.Tag)
 	var tagArr [][]string
 	_ = json.Unmarshal([]byte(res.Tag), &tagArr)
 	var result []string

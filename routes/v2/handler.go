@@ -49,13 +49,15 @@ func WriteBlogHandler() gin.HandlerFunc {
 func GetBlogListHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		page := c.DefaultQuery("p", "1")
+		keyword := c.DefaultQuery("kw", "")
 		pageInt, err := strconv.Atoi(page)
 		if err != nil {
 			util.ReturnError(c, conf.INVALID_PARAMS, conf.GetMessage(conf.INVALID_PARAMS), nil)
 			return
 		}
 		offset := (pageInt - 1) * conf.PERNUM
-		res := models.GetBlog(conf.PERNUM, offset)
+		res := models.GetBlog(conf.PERNUM, offset, keyword)
+		countNum := models.GetTotalNum(keyword)
 		var result []map[string]interface{}
 		for i := 0; i < len(res); i++ {
 			var tagList []string
@@ -75,6 +77,11 @@ func GetBlogListHandler() gin.HandlerFunc {
 			"code": 100,
 			"msg":  "success",
 			"data": result,
+			"page": map[string]interface{}{
+				"page_size":   conf.PERNUM,
+				"total":       countNum,
+				"currentpage": pageInt,
+			},
 		})
 	}
 }
