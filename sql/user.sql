@@ -4,5 +4,6 @@ CREATE TABLE users (
 	email VARCHAR ( 32 ),
 	real_name VARCHAR ( 64 ),
 	tel VARCHAR ( 16 ),
-status VARCHAR ( 16 )
+status VARCHAR ( 16 ),
+password varchar (64),
 )

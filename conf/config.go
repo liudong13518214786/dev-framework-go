@@ -43,7 +43,11 @@ const (
 	GLOBAL_SESSION       = "global_session"
 	PG_SQL_PRINT         = true
 	UploadDst            = "/go/src/dev-framework-go/static/img/"
-	PicUrlHost           = "http://127.0.0.1:8890/static/img/"
+	//PicUrlHost           = "http://127.0.0.1:8890/static/img/"
+)
+
+var (
+	PicUrlHost = "http://47.93.19.60:8890/static/img/"
 )
 
 func InitAppEnv() {

@@ -22,6 +22,7 @@ func InitRoute() *gin.Engine {
 	r.Use(diyerror.CatchError())
 	r.Use(session.SessionInit(conf.SESSION_NAME))
 	r.Use(cross.Cors())
+	//r.LoadHTMLGlob("dist/*")
 	r.Static("/static", "./static")
 	r.GET("/api/v1/login", v1.LoginHandler())
 	r.GET("/api/v1/logout", v1.LogOutHandler())
@@ -36,6 +37,7 @@ func InitRoute() *gin.Engine {
 		apiv1.GET("/user", v1.UserInfoHandler())
 		apiv1.POST("/write", v2.WriteBlogHandler())
 	}
+	r.GET("/", v2.IndexHandler())
 	if os.Getenv("APP_ENV") != "release" {
 		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	}

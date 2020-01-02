@@ -5,6 +5,7 @@ import (
 	"dev-framework-go/models"
 	"dev-framework-go/pkg/util"
 	"encoding/json"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -14,6 +15,7 @@ func UploadHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		file, _ := c.FormFile("file")
 		err := c.SaveUploadedFile(file, conf.UploadDst+file.Filename)
+		fmt.Println(err)
 		if err != nil {
 			util.ReturnError(c, 200, "上传失败", nil)
 			return
@@ -132,5 +134,11 @@ func GetClassHandler() gin.HandlerFunc {
 			"msg":  "success",
 			"data": res,
 		})
+	}
+}
+
+func IndexHandler() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.HTML(http.StatusOK, "index.html", nil)
 	}
 }
