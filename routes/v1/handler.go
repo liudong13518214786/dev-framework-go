@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"os"
 	"strconv"
 )
 
@@ -114,7 +113,7 @@ func LoginHandler() gin.HandlerFunc {
 		}
 		sess.Options(session.Options{
 			Path:     "/",
-			Domain:   os.Getenv("DOMAIN"),
+			Domain:   conf.DOMAIN,
 			MaxAge:   conf.COOKIE_EXPIRE_TIME,
 			Secure:   false,
 			HttpOnly: false, //如果是true,那么cookie只能通过http传输，无法本地获取
@@ -135,7 +134,7 @@ func LogOutHandler() gin.HandlerFunc {
 		s := session.Default(c)
 		s.Clear()
 		_ = s.Save()
-		c.SetCookie(conf.SESSION_NAME, "", -1, "/", os.Getenv("DOMAIN"), false, false)
+		c.SetCookie(conf.SESSION_NAME, "", -1, "/", conf.DOMAIN, false, false)
 		c.JSON(http.StatusOK, gin.H{
 			"code": conf.SUCCESS,
 			"msg":  conf.GetMessage(conf.SUCCESS),

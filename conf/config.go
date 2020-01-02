@@ -43,17 +43,21 @@ const (
 	GLOBAL_SESSION       = "global_session"
 	PG_SQL_PRINT         = true
 	UploadDst            = "/go/src/dev-framework-go/static/img/"
-	//PicUrlHost           = "http://127.0.0.1:8890/static/img/"
 )
 
 var (
-	PicUrlHost = "http://47.93.19.60:8890/static/img/"
+	DOMAIN     string
+	APP_ENV    string
+	PicUrlHost string
 )
 
 func InitAppEnv() {
-	env := os.Getenv("APP_ENV")
-	fmt.Printf("this is %s\n", env)
-	switch env {
+	DOMAIN = os.Getenv("DOMAIN")
+	APP_ENV = os.Getenv("APP_ENV")
+	PicUrlHost = fmt.Sprintf("http://%s:8890/static/img/", DOMAIN)
+	fmt.Println(PicUrlHost)
+	fmt.Printf("this is %s\n", APP_ENV)
+	switch APP_ENV {
 	case "debug":
 		gin.SetMode(gin.DebugMode)
 	case "test":
