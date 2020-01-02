@@ -107,6 +107,11 @@ func LoginHandler() gin.HandlerFunc {
 			})
 			return
 		}
+		res := models.GetUserInfoByTelPass(username, password)
+		if len(res) == 0 {
+			util.ReturnError(c, 500, "账号或密码错误", nil)
+			return
+		}
 		sess.Options(session.Options{
 			Path:     "/",
 			Domain:   os.Getenv("DOMAIN"),
@@ -114,12 +119,13 @@ func LoginHandler() gin.HandlerFunc {
 			Secure:   false,
 			HttpOnly: false, //如果是true,那么cookie只能通过http传输，无法本地获取
 		})
-		sess.Set("useruuid", username)
+		sess.Set("useruuid", res[0].Uuid)
+		sess.Set("tel", res[0].Tel)
 		_ = sess.Save()
 		c.JSON(http.StatusOK, gin.H{
 			"code": conf.SUCCESS,
 			"msg":  "登录成功",
-			"data": nil,
+			"data": res[0],
 		})
 	}
 }
@@ -129,6 +135,7 @@ func LogOutHandler() gin.HandlerFunc {
 		s := session.Default(c)
 		s.Clear()
 		_ = s.Save()
+		c.SetCookie(conf.SESSION_NAME, "", -1, "/", os.Getenv("DOMAIN"), false, false)
 		c.JSON(http.StatusOK, gin.H{
 			"code": conf.SUCCESS,
 			"msg":  conf.GetMessage(conf.SUCCESS),
@@ -185,8 +192,9 @@ func BillDetailHandler() gin.HandlerFunc {
 
 func UserInfoHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		tel := c.Query("tel")
-		res := models.GetUserInfoByTel(tel)
+		sess := session.Default(c)
+		userUuid := sess.Get("useruuid")
+		res := models.GetUserInfoByTel(userUuid.(string))
 		c.JSON(http.StatusOK, gin.H{
 			"code": conf.SUCCESS,
 			"msg":  "查询成功",

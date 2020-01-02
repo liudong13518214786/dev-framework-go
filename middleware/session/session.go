@@ -29,7 +29,7 @@ func SessionV1() gin.HandlerFunc {
 			code = conf.NOT_LOGIN
 		}
 		if code != conf.SUCCESS {
-			c.JSON(http.StatusUnauthorized, gin.H{
+			c.JSON(http.StatusOK, gin.H{
 				"code": code,
 				"msg":  conf.GetMessage(code),
 				"data": nil,

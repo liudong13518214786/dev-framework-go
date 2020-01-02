@@ -34,7 +34,7 @@ func InitRoute() *gin.Engine {
 	apiv1.Use(session.SessionV1())
 	{
 		apiv1.GET("/write", v1.RecordHandler())
-		apiv1.GET("/info", v1.UserInfoHandler())
+		apiv1.GET("/user", v1.UserInfoHandler())
 	}
 	if os.Getenv("APP_ENV") != "release" {
 		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

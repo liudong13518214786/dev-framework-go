@@ -1,9 +1,7 @@
 package models
 
 import (
-	"dev-framework-go/pkg/cache"
 	"dev-framework-go/pkg/db"
-	"encoding/json"
 )
 
 type Users struct {
@@ -14,15 +12,21 @@ type Users struct {
 	Status    string
 }
 
-func GetUserInfoByTel(tel string) Users {
+func GetUserInfoByTel(useruuid string) Users {
 	var u Users
-	xx := cache.GetKey("userinfo")
-	if xx != nil {
-		_ = json.Unmarshal([]byte(xx.(string)), &u)
-		return u
-	}
-	db.DBPool.Table("users").Select("uuid,email,real_name,tel,status").Where("tel=?", tel).First(&u)
-	jsons, _ := json.Marshal(u)
-	cache.SetKey("userinfo", string(jsons), 10)
+	//xx := cache.GetKey("userinfo")
+	//if xx != nil {
+	//	_ = json.Unmarshal([]byte(xx.(string)), &u)
+	//	return u
+	//}
+	db.DBPool.Table("users").Where("uuid=?", useruuid).First(&u)
+	//jsons, _ := json.Marshal(u)
+	//cache.SetKey("userinfo", string(jsons), 10)
+	return u
+}
+
+func GetUserInfoByTelPass(tel, password string) []Users {
+	var u []Users
+	db.DBPool.Table("users").Where("tel=? and password=?", tel, password).Find(&u)
 	return u
 }
