@@ -105,13 +105,13 @@ func GetBlogTag() []string {
 		}
 	}
 	result = util.RepeatArr(result)
-	return result
+	return result[:12]
 }
 
 func GetCateByTime() []TimeCate {
 	var res []TimeCate
 	db.DBPool.Table("blogs").Select("count(1) as num, to_char(build_time, 'YYYY-MM-DD') as build_time").
-		Group("to_char(build_time, 'YYYY-MM-DD')").Find(&res)
+		Group("to_char(build_time, 'YYYY-MM-DD')").Order("num desc").Limit(12).Find(&res)
 	return res
 }
 
