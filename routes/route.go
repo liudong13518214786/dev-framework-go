@@ -26,15 +26,15 @@ func InitRoute() *gin.Engine {
 	r.GET("/api/v1/login", v1.LoginHandler())
 	r.GET("/api/v1/logout", v1.LogOutHandler())
 	r.POST("/api/v1/upload", v2.UploadHandler())
-	r.POST("/api/v1/write", v2.WriteBlogHandler())
+
 	r.GET("/api/v1/blog", v2.GetBlogListHandler())
 	r.GET("/api/v1/detail", v2.DetailHandler())
 	r.GET("/api/v1/cate", v2.GetClassHandler())
 	apiv1 := r.Group("/api/v1")
 	apiv1.Use(session.SessionV1())
 	{
-		apiv1.GET("/write", v1.RecordHandler())
 		apiv1.GET("/user", v1.UserInfoHandler())
+		apiv1.POST("/write", v2.WriteBlogHandler())
 	}
 	if os.Getenv("APP_ENV") != "release" {
 		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
