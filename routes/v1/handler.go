@@ -112,7 +112,7 @@ func LoginHandler() gin.HandlerFunc {
 			Domain:   os.Getenv("DOMAIN"),
 			MaxAge:   conf.COOKIE_EXPIRE_TIME,
 			Secure:   false,
-			HttpOnly: true,
+			HttpOnly: false, //如果是true,那么cookie只能通过http传输，无法本地获取
 		})
 		sess.Set("useruuid", username)
 		_ = sess.Save()
