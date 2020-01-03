@@ -30,25 +30,25 @@ const (
 	//DB_PASS                 = "dY8*6fN6Z#xSOg$wG9zDATTe"
 	DB_PASS = "123456"
 	//DB_NAME                 = "mx_bill"
-	DB_NAME              = "users"
-	DB_MaxOpenConns      = 100
-	DB_MaxIdleConns      = 10 //空闲时的最大连接数
-	ERRORNOTIFYOPEN bool = false
-	SYSTEMEMAILUSER      = "liudong@mshare.cn"
-	EMAILTOUSER          = "846723063@qq.com" //多个用户逗号隔开
-	SYSTEMEMAILHOST      = "smtp.mxhichina.com"
-	SYSTEMEMAILPORT      = 25
-	SYSTEMEMAILPASS      = "LD@qq.com"
-	PERNUM               = 5 //每页显示条数
-	GLOBAL_SESSION       = "global_session"
-	PG_SQL_PRINT         = true
-	UploadDst            = "/go/src/dev-framework-go/static/img/"
+	DB_NAME         = "users"
+	DB_MaxOpenConns = 100
+	DB_MaxIdleConns = 10 //空闲时的最大连接数
+	SYSTEMEMAILUSER = "liudong@mshare.cn"
+	EMAILTOUSER     = "846723063@qq.com" //多个用户逗号隔开
+	SYSTEMEMAILHOST = "smtp.mxhichina.com"
+	SYSTEMEMAILPORT = 25
+	SYSTEMEMAILPASS = "LD@qq.com"
+	PERNUM          = 5 //每页显示条数
+	GLOBAL_SESSION  = "global_session"
+	UploadDst       = "/go/src/dev-framework-go/static/img/"
 )
 
 var (
-	DOMAIN     string
-	APP_ENV    string
-	PicUrlHost string
+	DOMAIN          string
+	APP_ENV         string
+	PicUrlHost      string
+	PG_SQL_PRINT    bool
+	ERRORNOTIFYOPEN bool
 )
 
 func InitAppEnv() {
@@ -58,10 +58,16 @@ func InitAppEnv() {
 	fmt.Printf("this is %s\n", APP_ENV)
 	switch APP_ENV {
 	case "debug":
+		PG_SQL_PRINT = true
+		ERRORNOTIFYOPEN = false
 		gin.SetMode(gin.DebugMode)
 	case "test":
+		PG_SQL_PRINT = true
+		ERRORNOTIFYOPEN = false
 		gin.SetMode(gin.TestMode)
 	case "release":
+		PG_SQL_PRINT = false
+		ERRORNOTIFYOPEN = true
 		gin.SetMode(gin.ReleaseMode)
 	default:
 		gin.SetMode(gin.DebugMode)
