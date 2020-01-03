@@ -39,7 +39,18 @@ func WriteBlogHandler() gin.HandlerFunc {
 			util.ReturnError(c, 500, "缺少参数", nil)
 			return
 		}
-		models.WriteBlog(title, img, content, tags)
+		bid := c.DefaultPostForm("bid", "")
+		if bid == "" {
+			models.WriteBlog(title, img, content, tags)
+		} else {
+			hasB := models.GetBlogByid(bid)
+			if len(hasB) == 0 {
+				util.ReturnError(c, 500, "参数错误", nil)
+				return
+			}
+			models.ModifyBlog(bid, title, img, content, tags)
+		}
+
 		c.JSON(200, gin.H{
 			"code": 100,
 			"msg":  "success",

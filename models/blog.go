@@ -52,6 +52,20 @@ func WriteBlog(title, img_url, info, tag string) {
 	db.DBPool.Create(&b)
 }
 
+func ModifyBlog(bid, title, img_url, info, tag string) {
+	var res Blog
+	tagList := strings.Split(tag, ";")
+	tagStr, _ := json.Marshal(tagList)
+	db1 := db.DBPool.Table("blogs").Where("uuid=?", bid).First(&res)
+	db1.Model(&res).Updates(map[string]interface{}{"title": title, "img_url": img_url, "info": info, "tag": string(tagStr)})
+}
+
+func GetBlogByid(bid string) []Blog {
+	var res []Blog
+	db.DBPool.Table("blogs").Where("uuid=?", bid).Find(&res)
+	return res
+}
+
 func GetBlog(limit, offset int, keyword, stype string) []Blog {
 	var res []Blog
 	db1 := db.DBPool.Table("blogs").Order("build_time DESC").Limit(limit).Offset(offset)
