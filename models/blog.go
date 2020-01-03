@@ -110,7 +110,7 @@ func UpdateNum(uuid string) {
 
 func GetBlogTag() []string {
 	var res TagList
-	db.DBPool.Table("blogs").Select("json_agg(tag) as Tag").Find(&res)
+	db.DBPool.Table("blogs").Select("json_agg(tag) as Tag").Where("status=?", "normal").Find(&res)
 	var tagArr [][]string
 	_ = json.Unmarshal([]byte(res.Tag), &tagArr)
 	var result []string
@@ -128,13 +128,13 @@ func GetBlogTag() []string {
 
 func GetCateByTime() []TimeCate {
 	var res []TimeCate
-	db.DBPool.Table("blogs").Select("count(1) as num, to_char(build_time, 'YYYY-MM-DD') as build_time").
+	db.DBPool.Table("blogs").Select("count(1) as num, to_char(build_time, 'YYYY-MM-DD') as build_time").Where("status=?", "normal").
 		Group("to_char(build_time, 'YYYY-MM-DD')").Order("num desc").Limit(12).Find(&res)
 	return res
 }
 
 func GetBlogByReadNum() []HotBlog {
 	var res []HotBlog
-	db.DBPool.Table("blogs").Select("uuid,title, read_num").Order("read_num DESC").Limit(5).Find(&res)
+	db.DBPool.Table("blogs").Select("uuid,title, read_num").Where("status=?", "normal").Order("read_num DESC").Limit(5).Find(&res)
 	return res
 }
