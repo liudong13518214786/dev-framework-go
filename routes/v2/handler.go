@@ -41,7 +41,7 @@ func WriteBlogHandler() gin.HandlerFunc {
 		}
 		bid := c.DefaultPostForm("bid", "")
 		if bid == "" {
-			models.WriteBlog(title, img, content, tags)
+			bid = models.WriteBlog(title, img, content, tags)
 		} else {
 			hasB := models.GetBlogByid(bid)
 			if len(hasB) == 0 {
@@ -54,7 +54,7 @@ func WriteBlogHandler() gin.HandlerFunc {
 		c.JSON(200, gin.H{
 			"code": 100,
 			"msg":  "success",
-			"data": nil,
+			"data": bid,
 		})
 	}
 }
@@ -112,13 +112,16 @@ func DetailHandler() gin.HandlerFunc {
 			util.ReturnError(c, 500, "参数错误", nil)
 			return
 		}
-
+		var tagList []string
+		_ = json.Unmarshal([]byte(res.Tag), &tagList)
 		result := map[string]interface{}{
 			"uuid":       res.Uuid,
 			"title":      res.Title,
 			"build_time": util.TransTime(res.Build_time),
 			"read_num":   res.ReadNum,
 			"info":       res.Info,
+			"tag":        tagList,
+			"img_url":    res.Img_url,
 		}
 
 		c.JSON(http.StatusOK, gin.H{

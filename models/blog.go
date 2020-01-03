@@ -35,7 +35,7 @@ type HotBlog struct {
 	Read_num int
 }
 
-func WriteBlog(title, img_url, info, tag string) {
+func WriteBlog(title, img_url, info, tag string) string {
 	//nowTime:=util.GetNowTime()
 	bid := util.GenerateRandomString("bid", 8)
 	tagList := strings.Split(tag, ";")
@@ -50,6 +50,7 @@ func WriteBlog(title, img_url, info, tag string) {
 		Build_time: time.Now(),
 	}
 	db.DBPool.Create(&b)
+	return bid
 }
 
 func ModifyBlog(bid, title, img_url, info, tag string) {
