@@ -70,6 +70,8 @@ func InitAppEnv() {
 		ERRORNOTIFYOPEN = true
 		gin.SetMode(gin.ReleaseMode)
 	default:
+		PG_SQL_PRINT = true
+		ERRORNOTIFYOPEN = false
 		gin.SetMode(gin.DebugMode)
 	}
 }
