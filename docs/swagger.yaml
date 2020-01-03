@@ -9,6 +9,64 @@ info:
   title: gin脚手脚
   version: "1.0"
 paths:
+  /api/v1/blog:
+    get:
+      consumes:
+      - application/json
+      description: 获取博客列表
+      parameters:
+      - description: 页数
+        in: query
+        name: p
+        type: string
+      - description: 关键词
+        in: query
+        name: kw
+        type: string
+      - description: 搜索类型
+        in: query
+        name: stype
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'code": 100, "msg": "success", "data":[]}'
+          schema:
+            type: string
+      summary: 首页
+  /api/v1/cate:
+    get:
+      consumes:
+      - application/json
+      description: 博客的分类
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'code": 100, "msg": "success", "data":[]}'
+          schema:
+            type: string
+      summary: 分类
+  /api/v1/detail:
+    get:
+      consumes:
+      - application/json
+      description: 博客详情
+      parameters:
+      - description: 博客id
+        in: query
+        name: uuid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'code": 100, "msg": "success", "data":nil}'
+          schema:
+            type: string
+      summary: 详情
   /api/v1/login:
     get:
       consumes:
@@ -33,4 +91,87 @@ paths:
           schema:
             type: string
       summary: 用户登录
+  /api/v1/logout:
+    get:
+      consumes:
+      - application/json
+      description: 退出登录
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'code": 100, "msg": "success", "data":nil}'
+          schema:
+            type: string
+      summary: 退出登录
+  /api/v1/upload:
+    post:
+      consumes:
+      - application/json
+      description: 上传博客头图
+      parameters:
+      - description: 用户名
+        in: query
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'code": 100, "msg": "上传成功", "data":"图片地址"}'
+          schema:
+            type: string
+      summary: 上传
+  /api/v1/user:
+    get:
+      consumes:
+      - application/json
+      description: 获取用户信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'code": 100, "msg": "success", "data":{}}'
+          schema:
+            type: string
+      summary: 获取用户信息
+  /api/v1/write:
+    post:
+      consumes:
+      - application/json
+      description: 如果博客存在，那么则修改
+      parameters:
+      - description: 头图
+        in: query
+        name: img
+        required: true
+        type: string
+      - description: 标题
+        in: query
+        name: title
+        required: true
+        type: string
+      - description: 内容
+        in: query
+        name: content
+        required: true
+        type: string
+      - description: 标签
+        in: query
+        name: tags
+        required: true
+        type: string
+      - description: 博客id
+        in: query
+        name: bid
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'code": 100, "msg": "success", "data":nil}'
+          schema:
+            type: string
+      summary: 编写博客
 swagger: "2.0"

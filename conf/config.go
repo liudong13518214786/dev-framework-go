@@ -55,7 +55,6 @@ func InitAppEnv() {
 	DOMAIN = os.Getenv("DOMAIN")
 	APP_ENV = os.Getenv("APP_ENV")
 	PicUrlHost = fmt.Sprintf("http://%s:8890/static/img/", DOMAIN)
-	fmt.Println(PicUrlHost)
 	fmt.Printf("this is %s\n", APP_ENV)
 	switch APP_ENV {
 	case "debug":

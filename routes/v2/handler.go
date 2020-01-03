@@ -11,6 +11,13 @@ import (
 	"strconv"
 )
 
+// @Summary 上传
+// @Description 上传博客头图
+// @Accept  json
+// @Produce  json
+// @Param   username     query    string     true        "用户名"
+// @Success 200 {string} string   {"code": 100, "msg": "上传成功", "data":"图片地址"}
+// @Router /api/v1/upload [post]
 func UploadHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		file, _ := c.FormFile("file")
@@ -29,6 +36,17 @@ func UploadHandler() gin.HandlerFunc {
 	}
 }
 
+// @Summary 编写博客
+// @Description 如果博客存在，那么则修改
+// @Accept  json
+// @Produce  json
+// @Param   img     query    string     true        "头图"
+// @Param   title     query    string     true        "标题"
+// @Param   content     query    string     true        "内容"
+// @Param   tags     query    string     true        "标签"
+// @Param   bid     query    string     false        "博客id"
+// @Success 200 {string} string   {"code": 100, "msg": "success", "data":nil}
+// @Router /api/v1/write [post]
 func WriteBlogHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		img := c.PostForm("img")
@@ -59,6 +77,15 @@ func WriteBlogHandler() gin.HandlerFunc {
 	}
 }
 
+// @Summary 首页
+// @Description 获取博客列表
+// @Accept  json
+// @Produce  json
+// @Param   p     query    string     false        "页数"
+// @Param   kw     query    string     false        "关键词"
+// @Param   stype     query    string     false        "搜索类型"
+// @Success 200 {string} string   {"code": 100, "msg": "success", "data":[]}
+// @Router /api/v1/blog [get]
 func GetBlogListHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		page := c.DefaultQuery("p", "1")
@@ -100,6 +127,13 @@ func GetBlogListHandler() gin.HandlerFunc {
 	}
 }
 
+// @Summary 详情
+// @Description 博客详情
+// @Accept  json
+// @Produce  json
+// @Param   uuid     query    string     true        "博客id"
+// @Success 200 {string} string   {"code": 100, "msg": "success", "data":nil}
+// @Router /api/v1/detail [get]
 func DetailHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		uuid := c.Query("uuid")
@@ -133,6 +167,12 @@ func DetailHandler() gin.HandlerFunc {
 	}
 }
 
+// @Summary 分类
+// @Description 博客的分类
+// @Accept  json
+// @Produce  json
+// @Success 200 {string} string   {"code": 100, "msg": "success", "data":[]}
+// @Router /api/v1/cate [get]
 func GetClassHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tag := models.GetBlogTag()

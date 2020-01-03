@@ -129,6 +129,12 @@ func LoginHandler() gin.HandlerFunc {
 	}
 }
 
+// @Summary 退出登录
+// @Description 退出登录
+// @Accept  json
+// @Produce  json
+// @Success 200 {string} string   {"code": 100, "msg": "success", "data":nil}
+// @Router /api/v1/logout [get]
 func LogOutHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		s := session.Default(c)
@@ -189,6 +195,12 @@ func BillDetailHandler() gin.HandlerFunc {
 	}
 }
 
+// @Summary 获取用户信息
+// @Description 获取用户信息
+// @Accept  json
+// @Produce  json
+// @Success 200 {string} string   {"code": 100, "msg": "success", "data":{}}
+// @Router /api/v1/user [get]
 func UserInfoHandler() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		sess := session.Default(c)
