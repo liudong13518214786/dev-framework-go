@@ -92,7 +92,7 @@ func GetTotalNum(keyword string) int {
 	var count int
 	db1 := db.DBPool.Table("blogs")
 	if keyword != "" {
-		db1 = db1.Where("info like ?", "%"+keyword+"%")
+		db1 = db1.Where("info like ?", "%"+keyword+"%").Where("status=?", "normal")
 	}
 	db1.Count(&count)
 	return count
