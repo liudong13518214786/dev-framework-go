@@ -18,6 +18,7 @@ type Blog struct {
 	Tag        string
 	Build_time time.Time
 	ReadNum    int
+	Status     string
 }
 
 type TagList struct {
@@ -48,6 +49,7 @@ func WriteBlog(title, img_url, info, tag string) string {
 		Info:       info,
 		Tag:        string(tagStr),
 		Build_time: time.Now(),
+		Status:     "normal",
 	}
 	db.DBPool.Create(&b)
 	return bid
