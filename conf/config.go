@@ -18,7 +18,7 @@ const (
 	REDIS_WAIT         bool = true
 	SESSION_NAME            = "SXS-TEST"
 	COOKIE_SECRET           = "PxzKZsak1JFBMg7of0tOCUrG9QYRiv3X"
-	COOKIE_EXPIRE_TIME      = 1800
+	COOKIE_EXPIRE_TIME      = 86400
 	PORT                    = ":8890"
 	TIME_FORMAT             = "2006-01-02 15:04:05"
 	//DB_HOST                 = "dbi.mshare.cn"
