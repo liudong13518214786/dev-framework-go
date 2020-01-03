@@ -120,7 +120,10 @@ func GetBlogTag() []string {
 		}
 	}
 	result = util.RepeatArr(result)
-	return result[:12]
+	if len(result) > 12 {
+		result = result[:12]
+	}
+	return result
 }
 
 func GetCateByTime() []TimeCate {

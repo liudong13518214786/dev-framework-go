@@ -16,7 +16,7 @@ type Users struct {
 
 func main() {
 	a := []string{"123", "123", "2"}
-	fmt.Println(a[:2])
+	fmt.Println(a[:5])
 }
 func RepeatArr(tar []string) []string {
 	result := make([]string, 0, len(tar))
