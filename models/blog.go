@@ -69,7 +69,7 @@ func GetBlogByid(bid string) []Blog {
 
 func GetBlog(limit, offset int, keyword, stype string) []Blog {
 	var res []Blog
-	db1 := db.DBPool.Table("blogs").Order("build_time DESC").Limit(limit).Offset(offset)
+	db1 := db.DBPool.Table("blogs").Where("status=?", "normal").Order("build_time DESC").Limit(limit).Offset(offset)
 	if keyword != "" {
 		if stype == "info" {
 			s := "%" + keyword + "%"
