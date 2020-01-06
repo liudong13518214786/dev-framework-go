@@ -82,7 +82,6 @@ func GetBlog(limit, offset int, keyword, stype string) []Blog {
 		} else {
 			db1 = db1.Where("to_char(build_time, 'YYYY-MM-DD')=?", keyword)
 		}
-
 	}
 	db1.Find(&res)
 	return res
