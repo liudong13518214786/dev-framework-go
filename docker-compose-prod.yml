@@ -5,14 +5,14 @@ volumes:
     driver: local
 
 services:
-  webtest: # 容器名字
-    #     image: liudongkenny/rpc:v3
+  webrelease: # 容器名字
+#     image: liudongkenny/rpc:v3
     build: .
-    container_name: webtest
+    container_name: webrelease
     command: go run main.go
     environment:
-      - APP_ENV=debug
-      - DOMAIN=localhost
+      - APP_ENV=release
+      - DOMAIN=47.93.19.60
       - TZ=Asia/Shanghai
     volumes:
       - .:/go/src/dev-framework-go/
@@ -21,7 +21,6 @@ services:
     depends_on:
       - db
       - redis
-
   db:
     image: postgres:9.4
     container_name: database_server
@@ -42,12 +41,12 @@ services:
   nginx:
     image: nginx:1.17
     ports:
-      - "8100:80"
+      - "80:80"
     container_name: nginx_server
     restart: always
     volumes:
-      - "./nginx.conf:/etc/nginx/nginx.conf:ro"
-      - "/Users/liudong/Documents/vmshare/kennyBlog/dist:/dist"
+      - "./nginx_prod.conf:/etc/nginx/nginx.conf:ro"
+      - "../kennyBlog/dist:/dist"
     networks:
       - "my-network"
     depends_on:
