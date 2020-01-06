@@ -11,4 +11,4 @@ echo "update frontend code success!"
 echo "start run docker-compose"
 cd ../dev-framework-go/
 docker-compose -f docker-compose.yml up -d
-each "server run success! http://47.93.19.60"
+echo "server run success! http://47.93.19.60"
