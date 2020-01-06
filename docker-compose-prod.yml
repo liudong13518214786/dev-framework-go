@@ -45,7 +45,7 @@ services:
     container_name: nginx_server
     restart: always
     volumes:
-      - "./nginx_prod.conf:/etc/nginx/nginx.conf:ro"
+      - "./nginx.conf:/etc/nginx/nginx.conf:ro"
       - "../kennyBlog/dist:/dist"
     networks:
       - "my-network"
