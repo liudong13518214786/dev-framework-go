@@ -50,7 +50,7 @@ services:
     networks:
       - "my-network"
     depends_on:
-      - webtest
+      - webrelease
 
 networks: # 网络
   my-network: # 网络名称
